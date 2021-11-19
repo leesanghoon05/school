@@ -2,36 +2,68 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>도서부</title>
   </head>
   <body>
-    <h1></h1>
+    <h1>도서부</h1>
     <div class="pc">
-      <img src="" class="picture">
+      <img src="d1.png" class="." width="75%" height="75%">
     </div>
-    <h5 class="a">동아리 내용</h5><br>
-    <h5 class="a">동아리 위치</h5><br>
-    <h5 class="a">동아리 활동</h5>
+    <br><h5 class="aa">1.동아리 위치<hr></h5><span class="font">위치</span>
+    <br><h5 class="aa">2.동아리 소개<hr></h5><span class="font"></span>
+    <div class="pc">
+      <br><img src="picture/book1.PNG" class="picture" width="75%" height="75%">
+      <br><img src="picture/book2.PNG" class="picture" width="75%" height="75%">
+    </div>
     <style>
     h1 {
       font-size:100px;
       text-align:center;
       border:black solid 2px;
+      margin:50px;
+      font-family: 'funt';
+    }
+    h5 {
+      margin:15px;
+    }
+    hr {
+      margin-top:15px;
+      margin-bottom:15px;
     }
     .picture {
       text-align:center;
       border:black solid 2px;
     }
+    .aa {
+      font-size:50px;
+      text-align:center;
+      color:gray;
+    }
     .a {
       font-size:80px;
-      color:green;
-      color:yellow;
+      color:gray;
       text-align:center;
       border:black solid 2px;
+      margin:0px;
     }
     .pc {
       text-align:center;
-      border:black solid 2px;
+    }
+    .font {
+      font-family: 'font';
+    }
+    @font-face {
+        font-family: 'font';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/HeirofLightBold.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'funt';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/CookieRunOTF-Black00.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
     }
     </style>
   </body>
