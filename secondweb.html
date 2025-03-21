@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Number Increment/Decrement</title>
     <style>
@@ -10,20 +11,20 @@
             padding: 0;
         }
 
-        /* º»¹® ½ºÅ¸ÀÏ */
+        /* ë³¸ë¬¸ ìŠ¤íƒ€ì¼ */
         .content {
             padding: 20px;
-            height: 2000px; /* ½ºÅ©·ÑÀ» È®ÀÎÇÏ±â À§ÇØ º»¹® ±æÀÌ¸¦ ´Ã¸² */
+            height: 2000px; /* ìŠ¤í¬ë¡¤ì„ í™•ì¸í•˜ê¸° ìœ„í•´ ë³¸ë¬¸ ê¸¸ì´ë¥¼ ëŠ˜ë¦¼ */
         }
 
-        /* ¹öÆ°ÀÌ ¿À¸¥ÂÊ À§¿¡ °íÁ¤µÇµµ·Ï */
+        /* ë²„íŠ¼ì´ ì˜¤ë¥¸ìª½ ìœ„ì— ê³ ì •ë˜ë„ë¡ */
         .container {
             position: fixed;
             top: 20px;
             left: 20px;
             display: flex;
             flex-direction: row;
-            gap: 50px; /* °¢ Á¶ °£ °£°İ È®´ë */
+            gap: 50px; /* ê° ì¡° ê°„ ê°„ê²© í™•ëŒ€ */
         }
 
         .group {
@@ -31,20 +32,20 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            height: 150px; /* ±×·ì ³ôÀÌ ¼³Á¤ */
-            margin-bottom: 20px; /* °¢ ±×·ì °£ °£°İ */
+            height: 150px; /* ê·¸ë£¹ ë†’ì´ ì„¤ì • */
+            margin-bottom: 20px; /* ê° ê·¸ë£¹ ê°„ ê°„ê²© */
             border-radius: 15px;
         }
 
-        /* ¾÷/´Ù¿î ¹öÆ° ½ºÅ¸ÀÏ (´õ µÕ±Û°í Á¡¼ö ¹Ú½º¿¡ ´õ ºÙµµ·Ï ¼öÁ¤) */
+        /* ì—…/ë‹¤ìš´ ë²„íŠ¼ ìŠ¤íƒ€ì¼ (ë” ë‘¥ê¸€ê³  ì ìˆ˜ ë°•ìŠ¤ì— ë” ë¶™ë„ë¡ ìˆ˜ì •) */
         button {
             width: 60px;
             height: 40px;
             font-size: 20px;
-            margin: 0; /* ¹öÆ° »çÀÌ °£°İ Á¦°Å */
+            margin: 0; /* ë²„íŠ¼ ì‚¬ì´ ê°„ê²© ì œê±° */
             cursor: pointer;
             border: 2px solid #ccc;
-            border-radius: 15px; /* µÕ±Ù ¸ğ¼­¸® Àû¿ë */
+            border-radius: 15px; /* ë‘¥ê·¼ ëª¨ì„œë¦¬ ì ìš© */
             transition: background-color 0.3s;
         }
 
@@ -52,7 +53,7 @@
                 background-color: #45a049;
             }
 
-        /* °¢ Á¶º° »ö»ó ¼³Á¤ */
+        /* ê° ì¡°ë³„ ìƒ‰ìƒ ì„¤ì • */
         .group1 {
             border: 3px solid #4CAF50;
             background-color: #e8f5e8;
@@ -78,7 +79,7 @@
             background-color: #f3e6ff;
         }
 
-        /* Á¡¼ö ¹Ú½º ½ºÅ¸ÀÏ (°íÁ¤ Å©±â) */
+        /* ì ìˆ˜ ë°•ìŠ¤ ìŠ¤íƒ€ì¼ (ê³ ì • í¬ê¸°) */
         .score-box {
             display: inline-block;
             padding: 15px 30px;
@@ -86,8 +87,8 @@
             background-color: #f0f0f0;
             border: 1px solid black;
             border-radius: 10px;
-            margin: 5px 0; /* °£°İ Á¼Èû */
-            width: 150px; /* °íÁ¤µÈ ³Êºñ */
+            margin: 5px 0; /* ê°„ê²© ì¢í˜ */
+            width: 150px; /* ê³ ì •ëœ ë„ˆë¹„ */
             text-align: center;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
         }
@@ -108,10 +109,10 @@
             width: 100px;
             height: 100px;
             font-size: 40px;
-            margin: 20; /* ¹öÆ° »çÀÌ °£°İ Á¦°Å */
+            margin: 20; /* ë²„íŠ¼ ì‚¬ì´ ê°„ê²© ì œê±° */
             cursor: pointer;
             border: 2px solid #ccc;
-            border-radius: 15px; /* µÕ±Ù ¸ğ¼­¸® Àû¿ë */
+            border-radius: 15px; /* ë‘¥ê·¼ ëª¨ì„œë¦¬ ì ìš© */
             transition: background-color 0.3s;
         }
         h1 {
@@ -124,21 +125,21 @@
     <div class="content">
         <span id="home">.</span>
         <hr style="margin-top:175px">
-        <a href="#home" class="back-button">µ¹¾Æ°¡±â</a>
-        <!-- Ã¹ ¹øÂ° ¹öÆ° -->
+        <a href="#home" class="back-button">ëŒì•„ê°€ê¸°</a>
+        <!-- ì²« ë²ˆì§¸ ë²„íŠ¼ -->
         <button class="special" onclick="handleClick(this, 'hello1')">1</button>
 
-        <!-- µÎ ¹øÂ° ¹öÆ° -->
+        <!-- ë‘ ë²ˆì§¸ ë²„íŠ¼ -->
         <button class="special" onclick="handleClick(this, 'hello2')">2</button>
 
-        <!-- ¼¼ ¹øÂ° ¹öÆ° -->
+        <!-- ì„¸ ë²ˆì§¸ ë²„íŠ¼ -->
         <button class="special" onclick="handleClick(this, 'hello3')">3</button>
 
-        <!-- Áß°£ ³»¿ë -->
+        <!-- ì¤‘ê°„ ë‚´ìš© -->
         <div style="height: 500px;">
         </div>
 
-        <!-- °¢ ¹öÆ°¿¡ ÇØ´çÇÏ´Â h1 ÅÂ±× -->
+        <!-- ê° ë²„íŠ¼ì— í•´ë‹¹í•˜ëŠ” h1 íƒœê·¸ -->
         <h1 id="hello1">Hello 1</h1>
         <div style="height: 500px;"></div>
         <h1 id="hello2">Hello 2</h1>
@@ -148,44 +149,44 @@
     </div>
 
     <div class="container">
-        <!-- 1Á¶ -->
+        <!-- 1ì¡° -->
         <div class="group group1" id="group1">
-            <button class="up" data-group="1">¡è</button>
-            <div class="score-box" id="number1">1Á¶: 0</div>
-            <button class="down" data-group="1">¡é</button>
+            <button class="up" data-group="1">â†‘</button>
+            <div class="score-box" id="number1">1ì¡°: 0</div>
+            <button class="down" data-group="1">â†“</button>
         </div>
 
-        <!-- 2Á¶ -->
+        <!-- 2ì¡° -->
         <div class="group group2" id="group2">
-            <button class="up" data-group="2">¡è</button>
-            <div class="score-box" id="number2">2Á¶: 0</div>
-            <button class="down" data-group="2">¡é</button>
+            <button class="up" data-group="2">â†‘</button>
+            <div class="score-box" id="number2">2ì¡°: 0</div>
+            <button class="down" data-group="2">â†“</button>
         </div>
 
-        <!-- 3Á¶ -->
+        <!-- 3ì¡° -->
         <div class="group group3" id="group3">
-            <button class="up" data-group="3">¡è</button>
-            <div class="score-box" id="number3">3Á¶: 0</div>
-            <button class="down" data-group="3">¡é</button>
+            <button class="up" data-group="3">â†‘</button>
+            <div class="score-box" id="number3">3ì¡°: 0</div>
+            <button class="down" data-group="3">â†“</button>
         </div>
 
-        <!-- 4Á¶ -->
+        <!-- 4ì¡° -->
         <div class="group group4" id="group4">
-            <button class="up" data-group="4">¡è</button>
-            <div class="score-box" id="number4">4Á¶: 0</div>
-            <button class="down" data-group="4">¡é</button>
+            <button class="up" data-group="4">â†‘</button>
+            <div class="score-box" id="number4">4ì¡°: 0</div>
+            <button class="down" data-group="4">â†“</button>
         </div>
 
-        <!-- 5Á¶ -->
+        <!-- 5ì¡° -->
         <div class="group group5" id="group5">
-            <button class="up" data-group="5">¡è</button>
-            <div class="score-box" id="number5">5Á¶: 0</div>
-            <button class="down" data-group="5">¡é</button>
+            <button class="up" data-group="5">â†‘</button>
+            <div class="score-box" id="number5">5ì¡°: 0</div>
+            <button class="down" data-group="5">â†“</button>
         </div>
     </div>
 
     <script>
-        // °¢ ±×·ìÀÇ Á¡¼ö¸¦ °ü¸®ÇÏ´Â °´Ã¼
+        // ê° ê·¸ë£¹ì˜ ì ìˆ˜ë¥¼ ê´€ë¦¬í•˜ëŠ” ê°ì²´
         const scores = {
             1: 0,
             2: 0,
@@ -194,7 +195,7 @@
             5: 0
         };
 
-        // ¹öÆ° Å¬¸¯ ÀÌº¥Æ® ¸®½º³Ê Ãß°¡
+        // ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ ì¶”ê°€
         document.querySelectorAll('.up').forEach(button => {
             button.addEventListener('click', () => {
                 const group = button.getAttribute('data-group');
@@ -211,31 +212,31 @@
             });
         });
 
-        // Á¡¼ö ¾÷µ¥ÀÌÆ® ÇÔ¼ö
+        // ì ìˆ˜ ì—…ë°ì´íŠ¸ í•¨ìˆ˜
         function updateDisplay(group) {
             const numberDisplay = document.getElementById(`number${group}`);
-            numberDisplay.textContent = `${group}Á¶: ${scores[group]}`;
+            numberDisplay.textContent = `${group}ì¡°: ${scores[group]}`;
         }
     </script>
 
     <script>
         function handleClick(button, targetId) {
-            // ¹öÆ° ÅØ½ºÆ®¸¦ "X"·Î º¯°æ
+            // ë²„íŠ¼ í…ìŠ¤íŠ¸ë¥¼ "X"ë¡œ ë³€ê²½
             button.textContent = "X";
 
-            // ¹öÆ° ½ºÅ¸ÀÏÀ» º¯°æÇÏ¿© "X" ¹öÆ°Ã³·³ º¸ÀÌ°Ô
+            // ë²„íŠ¼ ìŠ¤íƒ€ì¼ì„ ë³€ê²½í•˜ì—¬ "X" ë²„íŠ¼ì²˜ëŸ¼ ë³´ì´ê²Œ
             button.classList.add("x");
 
-            // ¸µÅ© ±â´ÉÀ» ºñÈ°¼ºÈ­
+            // ë§í¬ ê¸°ëŠ¥ì„ ë¹„í™œì„±í™”
             button.onclick = function (event) {
-                event.preventDefault();  // ¸µÅ© Å¬¸¯À» ¸·À½
+                event.preventDefault();  // ë§í¬ í´ë¦­ì„ ë§‰ìŒ
             };
 
-            // targetId¿¡ ÇØ´çÇÏ´Â h1 ÅÂ±×·Î ½ºÅ©·Ñ ÀÌµ¿
+            // targetIdì— í•´ë‹¹í•˜ëŠ” h1 íƒœê·¸ë¡œ ìŠ¤í¬ë¡¤ ì´ë™
             const target = document.getElementById(targetId);
             window.scrollTo({
-                top: target.offsetTop - 100, // Á¶Á¤ °¡´ÉÇÑ ¿ÀÇÁ¼Â
-                behavior: 'instant' // Áï½Ã ÀÌµ¿
+                top: target.offsetTop - 100, // ì¡°ì • ê°€ëŠ¥í•œ ì˜¤í”„ì…‹
+                behavior: 'instant' // ì¦‰ì‹œ ì´ë™
             });
         }
     </script>
