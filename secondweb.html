@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Increment/Decrement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 본문 스타일 */
+        .content {
+            padding: 20px;
+            height: 2000px; /* 스크롤을 확인하기 위해 본문 길이를 늘림 */
+        }
+
+        /* 버튼이 오른쪽 위에 고정되도록 */
+        .container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: row;
+            gap: 50px; /* 각 조 간 간격 확대 */
+        }
+
+        .group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 150px; /* 그룹 높이 설정 */
+            margin-bottom: 20px; /* 각 그룹 간 간격 */
+            border-radius: 15px;
+        }
+
+        /* 업/다운 버튼 스타일 (더 둥글고 점수 박스에 더 붙도록 수정) */
+        button {
+            width: 60px;
+            height: 40px;
+            font-size: 20px;
+            margin: 0; /* 버튼 사이 간격 제거 */
+            cursor: pointer;
+            border: 2px solid #ccc;
+            border-radius: 15px; /* 둥근 모서리 적용 */
+            transition: background-color 0.3s;
+        }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+        /* 각 조별 색상 설정 */
+        .group1 {
+            border: 3px solid #4CAF50;
+            background-color: #e8f5e8;
+        }
+
+        .group2 {
+            border: 3px solid #FF6347;
+            background-color: #ffebe6;
+        }
+
+        .group3 {
+            border: 3px solid #1E90FF;
+            background-color: #d9f1ff;
+        }
+
+        .group4 {
+            border: 3px solid #FFD700;
+            background-color: #fff4cc;
+        }
+
+        .group5 {
+            border: 3px solid #8A2BE2;
+            background-color: #f3e6ff;
+        }
+
+        /* 점수 박스 스타일 (고정 크기) */
+        .score-box {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 30px;
+            background-color: #f0f0f0;
+            border: 1px solid black;
+            border-radius: 10px;
+            margin: 5px 0; /* 간격 좁힘 */
+            width: 150px; /* 고정된 너비 */
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+        .special {
+            width: 100px;
+            height: 100px;
+            font-size: 40px;
+            margin: 20; /* 버튼 사이 간격 제거 */
+            cursor: pointer;
+            border: 2px solid #ccc;
+            border-radius: 15px; /* 둥근 모서리 적용 */
+            transition: background-color 0.3s;
+        }
+        h1 {
+            padding-top:120px;
+            font-size:60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <span id="home">.</span>
+        <hr style="margin-top:175px">
+        <a href="#home" class="back-button">돌아가기</a>
+        <!-- 첫 번째 버튼 -->
+        <button class="special" onclick="handleClick(this, 'hello1')">1</button>
+
+        <!-- 두 번째 버튼 -->
+        <button class="special" onclick="handleClick(this, 'hello2')">2</button>
+
+        <!-- 세 번째 버튼 -->
+        <button class="special" onclick="handleClick(this, 'hello3')">3</button>
+
+        <!-- 중간 내용 -->
+        <div style="height: 500px;">
+        </div>
+
+        <!-- 각 버튼에 해당하는 h1 태그 -->
+        <h1 id="hello1">Hello 1</h1>
+        <div style="height: 500px;"></div>
+        <h1 id="hello2">Hello 2</h1>
+        <div style="height: 500px;"></div>
+        <h1 id="hello3">Hello 3</h1>
+        <div style="height: 500px;"></div>
+    </div>
+
+    <div class="container">
+        <!-- 1조 -->
+        <div class="group group1" id="group1">
+            <button class="up" data-group="1">↑</button>
+            <div class="score-box" id="number1">1조: 0</div>
+            <button class="down" data-group="1">↓</button>
+        </div>
+
+        <!-- 2조 -->
+        <div class="group group2" id="group2">
+            <button class="up" data-group="2">↑</button>
+            <div class="score-box" id="number2">2조: 0</div>
+            <button class="down" data-group="2">↓</button>
+        </div>
+
+        <!-- 3조 -->
+        <div class="group group3" id="group3">
+            <button class="up" data-group="3">↑</button>
+            <div class="score-box" id="number3">3조: 0</div>
+            <button class="down" data-group="3">↓</button>
+        </div>
+
+        <!-- 4조 -->
+        <div class="group group4" id="group4">
+            <button class="up" data-group="4">↑</button>
+            <div class="score-box" id="number4">4조: 0</div>
+            <button class="down" data-group="4">↓</button>
+        </div>
+
+        <!-- 5조 -->
+        <div class="group group5" id="group5">
+            <button class="up" data-group="5">↑</button>
+            <div class="score-box" id="number5">5조: 0</div>
+            <button class="down" data-group="5">↓</button>
+        </div>
+    </div>
+
+    <script>
+        // 각 그룹의 점수를 관리하는 객체
+        const scores = {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0
+        };
+
+        // 버튼 클릭 이벤트 리스너 추가
+        document.querySelectorAll('.up').forEach(button => {
+            button.addEventListener('click', () => {
+                const group = button.getAttribute('data-group');
+                scores[group]++;
+                updateDisplay(group);
+            });
+        });
+
+        document.querySelectorAll('.down').forEach(button => {
+            button.addEventListener('click', () => {
+                const group = button.getAttribute('data-group');
+                scores[group]--;
+                updateDisplay(group);
+            });
+        });
+
+        // 점수 업데이트 함수
+        function updateDisplay(group) {
+            const numberDisplay = document.getElementById(`number${group}`);
+            numberDisplay.textContent = `${group}조: ${scores[group]}`;
+        }
+    </script>
+
+    <script>
+        function handleClick(button, targetId) {
+            // 버튼 텍스트를 "X"로 변경
+            button.textContent = "X";
+
+            // 버튼 스타일을 변경하여 "X" 버튼처럼 보이게
+            button.classList.add("x");
+
+            // 링크 기능을 비활성화
+            button.onclick = function (event) {
+                event.preventDefault();  // 링크 클릭을 막음
+            };
+
+            // targetId에 해당하는 h1 태그로 스크롤 이동
+            const target = document.getElementById(targetId);
+            window.scrollTo({
+                top: target.offsetTop - 100, // 조정 가능한 오프셋
+                behavior: 'instant' // 즉시 이동
+            });
+        }
+    </script>
+</body>
+</html>
