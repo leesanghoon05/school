@@ -8,7 +8,9 @@
 <body>
     <script src="https://cdn.jsdelivr.net/npm/sakura-js@1.1.1/dist/sakura.min.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', () => {new Sakura('body');});
+      document.addEventListener('DOMContentLoaded', () => {
+    new Sakura('body');
+  });
 </script>
     <h1 class="h1-under" id="hi">채플 진행 시트<br />입니다.</h1>
     <div class="center">
@@ -27,16 +29,18 @@
     </div>
     <style>
         .sakura {
-          position: absolute;
-          display: block;
-          width: 10px;
-          height: 10px;
-          background: radial-gradient(circle, pink 30%, transparent 30%);
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 15px;
+          height: 15px;
+          background: radial-gradient(circle, pink 40%, transparent 40%);
           border-radius: 50%;
           pointer-events: none;
           z-index: 9999;
           animation: fall 10s linear infinite;
         }
+
         @keyframes fall {
           0% {
             transform: translateY(0) rotate(0deg);
@@ -50,8 +54,8 @@
         html, body {
           margin: 0;
           padding: 0;
-          height: 100%;
-          overflow: hidden;
+          min-height: 100%;
+          overflow-x: hidden; 
         }
         #hi {
             background: linear-gradient(to right, #009949, #690099);
