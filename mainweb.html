@@ -8,8 +8,13 @@
 <body>
     <script src="https://cdn.jsdelivr.net/npm/sakura-js@1.1.1/dist/sakura.min.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-    new Sakura('body');
+  document.addEventListener('DOMContentLoaded', () => {
+    new Sakura('body', {
+      maxSize: 30,
+      minSize: 18,
+      fallSpeed: 1,
+      delay: 300  // 더 자주 생성됨 (꽃잎 수 증가)
+    });
   });
 </script>
     <h1 class="h1-under" id="hi">채플 진행 시트<br />입니다.</h1>
@@ -32,8 +37,8 @@
           position: fixed;
           top: 0;
           left: 0;
-          width: 15px;
-          height: 15px;
+          width: 24px;
+          height: 24px;
           background: radial-gradient(circle, pink 40%, transparent 40%);
           border-radius: 50%;
           pointer-events: none;
