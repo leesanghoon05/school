@@ -3,197 +3,1021 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Number Increment/Decrement</title>
+    <title>last commit 25.5.27</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background: #fafafa;
+        }
+        body, html {
+            width: 100%;
+            min-width: 0;
+            overflow-x: hidden;
         }
 
-        /* 본문 스타일 */
-        .content {
-            padding: 20px;
-            height: 2000px; /* 스크롤을 확인하기 위해 본문 길이를 늘림 */
-        }
-
-        /* 버튼이 오른쪽 위에 고정되도록 */
-        .container {
-            position: fixed;
-            top: 20px;
-            left: 20px;
+        .main-wrapper {
             display: flex;
             flex-direction: row;
-            gap: 50px; /* 각 조 간 간격 확대 */
+            justify-content: flex-start;
+            align-items: flex-start;
+            min-height: 100vh;
+            width: 100%;
+            box-sizing: border-box;
         }
-
-        .group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            height: 150px; /* 그룹 높이 설정 */
-            margin-bottom: 20px; /* 각 그룹 간 간격 */
-            border-radius: 15px;
-        }
-
-        /* 업/다운 버튼 스타일 (더 둥글고 점수 박스에 더 붙도록 수정) */
-        button {
-            width: 60px;
-            height: 40px;
-            font-size: 20px;
-            margin: 0; /* 버튼 사이 간격 제거 */
-            cursor: pointer;
-            border: 2px solid #ccc;
-            border-radius: 15px; /* 둥근 모서리 적용 */
-            transition: background-color 0.3s;
-        }
-
-            button:hover {
-                background-color: #45a049;
-            }
-
-        /* 각 조별 색상 설정 */
-        .group1 {
-            border: 3px solid #4CAF50;
-            background-color: #e8f5e8;
-        }
-
-        .group2 {
-            border: 3px solid #FF6347;
-            background-color: #ffebe6;
-        }
-
-        .group3 {
-            border: 3px solid #1E90FF;
-            background-color: #d9f1ff;
-        }
-
-        .group4 {
-            border: 3px solid #FFD700;
-            background-color: #fff4cc;
-        }
-
-        .group5 {
-            border: 3px solid #8A2BE2;
-            background-color: #f3e6ff;
-        }
-
-        /* 점수 박스 스타일 (고정 크기) */
-        .score-box {
-            display: inline-block;
-            padding: 15px 30px;
-            font-size: 30px;
-            background-color: #f0f0f0;
-            border: 1px solid black;
-            border-radius: 10px;
-            margin: 5px 0; /* 간격 좁힘 */
-            width: 150px; /* 고정된 너비 */
-            text-align: center;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .back-button {
+        /* 우측 고정 점수판 컨테이너 */
+        .right-fixed-container {
             position: fixed;
             top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background-color: #f44336;
-            color: white;
+            right: 0;
+            width: 270px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 28px;
+            background: rgba(255,255,255,0.97);
+            box-shadow: -2px 0 10px rgba(0,0,0,0.08);
+            padding: 24px 18px 24px 18px;
+            border-radius: 18px 0 0 18px;
+        }
+        .right-fixed-container .group {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            margin: 0;
+            border-radius: 10px;
+            height: 80px;
+            padding: 0;
+        }
+        .right-fixed-container .score-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100%;
+        }
+        .right-fixed-container .updown-col {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin-right: 12px;
+            gap: 8px;
+            justify-content: center;
+        }
+        .right-fixed-container button.up,
+        .right-fixed-container button.down {
+            width: 44px;
+            height: 36px;
+            margin: 0;
+            font-size: 20px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            background: #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .right-fixed-container button.up:hover,
+        .right-fixed-container button.down:hover {
+            background: #e0e0e0;
+        }
+        .right-fixed-container .score-box {
+            flex: 1;
+            width: auto;
+            min-width: 80px;
+            font-size: 26px;
+            padding: 16px 0;
+            margin: 0;
+            text-align: center;
+            background: #f0f0f0;
+            border: 1.5px solid #bbb;
+            border-radius: 8px;
+        }
+        .right-fixed-container .reset-button,
+        .right-fixed-container .back-button {
+            width: 100%;
+            margin: 0;
+            margin-top: 16px;
+            font-size: 22px;
+            border-radius: 8px;
+            padding: 16px 0;
+            font-weight: bold;
             border: none;
             cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            transition: background 0.2s;
+        }
+        .right-fixed-container .reset-button {
+            background-color: #2196F3;
+            color: white;
+        }
+        .right-fixed-container .reset-button:hover {
+            background-color: #1976D2;
+        }
+        .right-fixed-container .back-button {
+            background-color: #f44336;
+            color: white;
+        }
+        .right-fixed-container .back-button:hover {
+            background-color: #d32f2f;
+        }
+        /* 중앙 컨텐츠 영역 - 왼쪽 정렬 */
+        .center-content {
+            margin-left: 0;
+            margin-right: auto;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            width: 1500px;
+            max-width: calc(100vw - 300px);
+            min-width: 320px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        /* special-header 스타일 */
+        .special-header-row {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(187px, 1fr));
+            margin-bottom: 18px;
+            gap: 0;
+        }
+        .special-header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.4em;
+            padding: 16px 0 12px 0;
+            background: #e3e7f7;
+            color: #222;
+            border-radius: 16px 16px 0 0;
+            border: 2px solid #b0b8d8;
+            box-shadow: 0 2px 8px rgba(80,100,180,0.10);
+            letter-spacing: 1.5px;
+            text-shadow: 0 1px 0 #fff, 0 2px 6px #b0b8d8;
+        }
+        /* special-buttons-container 스타일 */
+        #special-buttons-container {
+            width: 75vw;
+            max-width: 75vw;
+            min-width: 320px;
+            margin: 0 0 30px 36px;
+            background: #fcfcfe;
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(200,200,220,0.05);
+            padding-bottom: 10px;
+        }
+        /* special-header-row와 #special-buttons의 컬럼 폭을 반드시 동일하게! */
+        .special-header-row,
+        #special-buttons {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr); /* 6등분, 버튼당 약 16.6% */
+            gap: 14px 10px;
         }
         .special {
-            width: 100px;
-            height: 100px;
-            font-size: 40px;
-            margin: 20; /* 버튼 사이 간격 제거 */
-            cursor: pointer;
-            border: 2px solid #ccc;
-            border-radius: 15px; /* 둥근 모서리 적용 */
-            transition: background-color 0.3s;
+            width: 100%;
+            min-width: 0;
+            height: 110px;
+            font-size: 2.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2.5px solid #222;
+            background: #fff;
+            transition: background 0.2s, border 0.2s;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0 auto;
+            border-radius: 12px;
+            font-weight: bold;
+            user-select: none;
+            margin-top: 0;
+        }
+        .special:active,
+        .special.x {
+            background: #f3f3f7;
+            color: #aaa;
+            border-color: #bbb;
         }
         h1 {
-            padding-top:120px;
-            font-size:60px;
+            font-size: 60px;
+            margin-left: 20px;
         }
+        /* 숫자 버튼 사이 간격 추가 */
+        #special-buttons {
+            gap: 14px 10px; /* 행 간격 14px, 열 간격 10px */
+        }
+        .space1000 {
+            height: 1000px;
+        }
+        .space300 {
+            height: 100px;
+        }
+        .emoji-quiz {
+            font-size: 3em;
+            text-align: center;
+        }
+        html {
+        font-size: 20px;
+    }
+    .ppp {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        font-size: 80px;
+    }
+    .pp {
+        display: inline;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        font-size: 45px;
+    }
     </style>
 </head>
 <body>
-    <div class="content">
-        <span id="home">.</span>
-        <hr style="margin-top:175px">
-        <a href="#home" class="back-button">돌아가기</a>
-        <!-- 첫 번째 버튼 -->
-        <button class="special" onclick="handleClick(this, 'hello1')">1</button>
-
-        <!-- 두 번째 버튼 -->
-        <button class="special" onclick="handleClick(this, 'hello2')">2</button>
-
-        <!-- 세 번째 버튼 -->
-        <button class="special" onclick="handleClick(this, 'hello3')">3</button>
-
-        <!-- 중간 내용 -->
-        <div style="height: 500px;">
+    <div class="main-wrapper">
+        <div class="right-fixed-container">
+            <!-- 1조~5조 점수판 -->
+            <div class="group group1" id="group1">
+                <div class="score-row">
+                    <div class="updown-col">
+                        <button class="up" data-group="1">↑</button>
+                        <button class="down" data-group="1">↓</button>
+                    </div>
+                    <div class="score-box" id="number1" style="background-color: #ffe2dd;">1조: 0</div>
+                </div>
+            </div>
+            <div class="group group2" id="group2">
+                <div class="score-row">
+                    <div class="updown-col">
+                        <button class="up" data-group="2">↑</button>
+                        <button class="down" data-group="2">↓</button>
+                    </div>
+                    <div class="score-box" id="number2" style="background-color: #fffedd;">2조: 0</div>
+                </div>
+            </div>
+            <div class="group group3" id="group3">
+                <div class="score-row">
+                    <div class="updown-col">
+                        <button class="up" data-group="3">↑</button>
+                        <button class="down" data-group="3">↓</button>
+                    </div>
+                    <div class="score-box" id="number3" style="background-color: #e4ffdd;">3조: 0</div>
+                </div>
+            </div>
+            <div class="group group4" id="group4">
+                <div class="score-row">
+                    <div class="updown-col">
+                        <button class="up" data-group="4">↑</button>
+                        <button class="down" data-group="4">↓</button>
+                    </div>
+                    <div class="score-box" id="number4" style="background-color: #ddfff4;">4조: 0</div>
+                </div>
+            </div>
+            <div class="group group5" id="group5">
+                <div class="score-row">
+                    <div class="updown-col">
+                        <button class="up" data-group="5">↑</button>
+                        <button class="down" data-group="5">↓</button>
+                    </div>
+                    <div class="score-box" id="number5" style="background-color: #e1ddff;">5조: 0</div>
+                </div>
+            </div>
+            <!-- 리셋, 돌아가기 버튼 -->
+            <button class="reset-button" onclick="resetScores()">리셋하기</button>
+            <button class="back-button" onclick="scrollToTop()">돌아가기</button>
+            <button class="dice-button" onclick="rollDice()" style="width:100%;margin-top:12px;font-size:22px;border-radius:8px;padding:16px 0;font-weight:bold;border:none;cursor:pointer;background-color:#4caf50;color:white;box-shadow:0 4px 8px rgba(0,0,0,0.08);transition:background 0.2s;">
+                🎲 주사위 굴리기
+            </button>
+            <!-- 주사위 결과 표시 영역 -->
+            <div id="dice-result" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3000;text-align:center;font-size:3em;font-weight:bold;color:#388e3c;background:#e8f5e9;border-radius:18px;padding:36px 60px;box-shadow:0 8px 32px rgba(0,0,0,0.18);transition:all 0.3s;"></div>
         </div>
-
-        <!-- 각 버튼에 해당하는 h1 태그 -->
-        <h1 id="hello1">Hello 1</h1>
-        <div style="height: 500px;"></div>
-        <h1 id="hello2">Hello 2</h1>
-        <div style="height: 500px;"></div>
-        <h1 id="hello3">Hello 3</h1>
-        <div style="height: 500px;"></div>
+        <div class="center-content">
+            <!-- 30개 버튼을 위한 그리드 컨테이너 -->
+            <div id="special-buttons-container">
+                <div class="special-header-row">
+                    <div class="special-header">명대사 맞추기</div>
+                    <div class="special-header">릴레이 퀴즈</div>
+                    <div class="special-header">넌센스 퀴즈</div>
+                    <div class="special-header">이모지 퀴즈</div>
+                    <div class="special-header">노래 퀴즈</div>
+                    <div class="special-header">상식 퀴즈</div>
+                </div>
+                <div id="special-buttons"></div>
+            </div>
+            <!-- 각 버튼에 해당하는 h1 태그는 그대로 두세요 -->
+            <div class="space1000"></div>
+            <h1 id="hello1">
+                명대사 맞추기
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 아래 이미지를 보고 떠오르는 <b>명대사</b>를 맞혀보세요!<br>
+                선택된 조가 정답을 맞추지 못하거나 싱크로율이 떨어지면 다른 조에게 기회가 넘어갑니다.
+            </div>
+            <div style="margin-left:20px; margin-bottom:60px;">
+                <img src="source/a1.jpg" alt="명대사 맞추기 1번" style="width:1280px; border-radius:14px; box-shadow:0 2px 12px #b0b8d8;">
+                <button onclick="location.href='#point2'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello2">
+                릴레이 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 주제에 해당하는 것을 차례대로 한명씩 말하면 됩니다!<br>
+                조원 모두가 겹치지 않게 대답해야 합니다.<br>
+                선택된 조가 틀릴 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <button id="show-hello1-section" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#81efd1; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    주제어
+                </button>
+                <br>
+                <div id="hello1-section" style="display:none; margin-top:18px;">
+                    <h1>봉지라면 종류</h1>
+                </div><br>
+                <button onclick="location.href='#point13'" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#4caf50; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <script>
+                // 주제어1 버튼 클릭 시 hello1-section 보이기
+                document.getElementById('show-hello1-section').onclick = function() {
+                    document.getElementById('hello1-section').style.display = 'block';
+                };
+            </script>
+            <div class="space1000"></div>
+            <h1 id="hello3">
+                넌센스 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 아래 글을 보고 문제를 풀어주시면 됩니다!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br><br>
+                <b>문제:</b> 불이 켜진 양초가 10개 있었다.<br><br>
+                그런데 바람이 불어서 2개가 꺼지고 말았다.<br><br>
+                그리고 잠시 후에 보니 또 1개가 꺼져 있었다.<br><br>
+                그로부터 바람이 닿지 않도록 하고 그 후 1개도 꺼지지 않았다면 끝까지 남아 있었던 양초는 몇 개일까?<br><br><br>
+                <button onclick="location.href='#point6'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello4">
+                이모지 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 이모지를 보고 전부 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <b>주제어:</b> 속담
+                <span class="emoji-quiz"><br>🥚🪨👊</span>
+                <span class="emoji-quiz"><br>🐦🌅🐛</span>
+                <span class="emoji-quiz"><br>🧑‍✈️🧑‍✈️🧑‍✈️🚤➡️⛰️</span><br><br>
+                <button onclick="location.href='#point16'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello5">
+                노래 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 가사를 듣고 노래 제목을 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <audio src="source/reader1.mp3" controls style="width:100%; max-width:600px; border-radius:10px; box-shadow:0 2px 8px #b0b8d8;">
+                 브라우저가 audio 태그를 지원하지 않습니다.
+                 </audio><br><br>
+                <button onclick="location.href='#point1'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello6">
+                상식 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 질문을 보고 정답을 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <b>질문:</b>
+                스마트폰 사진을 인터넷에 올릴 때 위치 정보가 자동 저장되기도 합니다.<br>사진 파일에 숨겨진 이런 부가 정보를 통칭해 어떤 데이터라 할까요?<br><br>
+                1) 알파 데이터<br><br>
+                2) 메타 데이터<br><br>
+                3) 델타 데이터<br><br>
+                4) 오메가 데이터<br><br>
+                <button onclick="location.href='#point8'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello7">
+                명대사 맞추기
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 아래 이미지를 보고 떠오르는 <b>명대사</b>를 맞혀보세요!<br>
+                선택된 조가 정답을 맞추지 못하거나 싱크로율이 떨어지면 다른 조에게 기회가 넘어갑니다.
+            </div>
+            <div style="margin-left:20px; margin-bottom:60px;">
+                <img src="source/a2.jpg" alt="명대사 맞추기 2번" style="width:960px; border-radius:14px; box-shadow:0 2px 12px #b0b8d8;">
+                <button onclick="location.href='#point19'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello8">
+                릴레이 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 주제에 해당하는 것을 차례대로 한명씩 말하면 됩니다!<br>
+                조원 모두가 겹치지 않게 대답해야 합니다.<br>
+                선택된 조가 틀릴 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <button id="show-hello2-section" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#81efd1; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    주제어
+                </button>
+                <br>
+                <div id="hello2-section" style="display:none; margin-top:18px;">
+                    <h1>아시아 국가</h1>
+                </div><br>
+                <button onclick="location.href='#point4'" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#4caf50; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <script>
+                // 주제어1 버튼 클릭 시 hello1-section 보이기
+                document.getElementById('show-hello2-section').onclick = function() {
+                    document.getElementById('hello2-section').style.display = 'block';
+                };
+            </script>
+            <div class="space1000"></div>
+            <h1 id="hello9">
+                넌센스 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 아래 글을 보고 문제를 풀어주시면 됩니다!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br><br>
+                <b>문제:</b> 다음은 용의자 5명의 증언이다.<br><br>
+                A  Γ5명 중 1명이 거짓말을 하고 있어」<br><br>
+                B  Γ5명 중 2명이 거짓말을 하고 있어」<br><br>
+                C  Γ5명 중 3명이 거짓말을 하고 있어」<br><br>
+                D  Γ5명 중 4명이 거짓말을 하고 있어」<br><br>
+                E   Γ5명 전부 다 거짓말을 하고 있어」<br><br>
+                이 중에서 진실을 말하고 있는 사람을 석방하려면 몇 명을 석방해야 할까?<br><br><br>
+                <button onclick="location.href='#point12'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello10">
+                이모지 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 이모지를 보고 전부 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <b>주제어:</b> 영화
+                <span class="emoji-quiz"><br>🐼🥋👊</span>
+                <span class="emoji-quiz"><br>👦🪄🦉🏰</span>
+                <span class="emoji-quiz"><br>🦁👑</span><br><br>
+                <button onclick="location.href='#point6'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello11">
+                노래 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 믹스된 노래들을 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br><br>
+                <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                    <audio id="audio1" src="source/qwer.mp3" controls style="width:100%; max-width:600px; border-radius:10px; box-shadow:0 2px 8px #b0b8d8;">
+                        브라우저가 audio 태그를 지원하지 않습니다.
+                    </audio>
+                    <audio id="audio2" src="source/10cm.mp3" controls style="width:100%; max-width:600px; border-radius:10px; box-shadow:0 2px 8px #b0b8d8;">
+                        브라우저가 audio 태그를 지원하지 않습니다.
+                    </audio>
+                    <audio id="audio3" src="source/img.mp3" controls style="width:100%; max-width:600px; border-radius:10px; box-shadow:0 2px 8px #b0b8d8;">
+                        브라우저가 audio 태그를 지원하지 않습니다.
+                    </audio><br><br>
+                </div>
+                <button onclick="playAllAudios1()" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#673ab7; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    모두 동시에 재생
+                </button>
+                <button onclick="pauseAllAudios1()" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#b71c1c; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer; margin-left:16px;">
+                    모두 멈춤
+                </button>
+                <script>
+                    function playAllAudios1() {
+                        document.getElementById('audio1').currentTime = 0;
+                        document.getElementById('audio2').currentTime = 0;
+                        document.getElementById('audio3').currentTime = 0;
+                        document.getElementById('audio1').play();
+                        document.getElementById('audio2').play();
+                        document.getElementById('audio3').play();
+                    }
+                    function pauseAllAudios1() {
+                        document.getElementById('audio1').pause();
+                        document.getElementById('audio2').pause();
+                        document.getElementById('audio3').pause();
+                    }
+                </script>
+                <button onclick="location.href='#point3'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello12">
+                상식 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 질문을 보고 정답을 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <b>질문:</b>
+                세계 최초 영상 스트리밍 상용 서비스 '넷플릭스’는 1997년 창립 당시 어떤 사업 모델로 출발했을까요?<br><br>
+                1) 온라인 VOD<br><br>
+                3) DVD 우편 대여<br><br>
+                2) 케이블 채널<br><br>
+                4) 영화 제작<br><br>
+                <button onclick="location.href='#point21'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div> 
+            <h1 id="hello13">
+                명대사 맞추기
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 아래 이미지를 보고 떠오르는 <b>명대사</b>를 맞혀보세요!<br>
+                선택된 조가 정답을 맞추지 못하거나 싱크로율이 떨어지면 다른 조에게 기회가 넘어갑니다.
+            </div>
+            <div style="margin-left:20px; margin-bottom:60px;">
+                <img src="source/a3.jpg" alt="명대사 맞추기 3번" style="width:960px; border-radius:14px; box-shadow:0 2px 12px #b0b8d8;">
+                <button onclick="location.href='#point10'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello14">
+                릴레이 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 주제에 해당하는 것을 차례대로 한명씩 말하면 됩니다!<br>
+                조원 모두가 겹치지 않게 대답해야 합니다.<br>
+                선택된 조가 틀릴 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <button id="show-hello3-section" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#81efd1; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    주제어
+                </button>
+                <br>
+                <div id="hello3-section" style="display:none; margin-top:18px;">
+                    <h1>아이스크림 종류</h1>
+                </div><br>
+                <button onclick="location.href='#point0'" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#4caf50; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <script>
+                // 주제어1 버튼 클릭 시 hello1-section 보이기
+                document.getElementById('show-hello3-section').onclick = function() {
+                    document.getElementById('hello3-section').style.display = 'block';
+                };
+            </script>
+            <div class="space1000"></div>
+            <h1 id="hello15">
+                넌센스 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 아래 글을 보고 문제를 풀어주시면 됩니다!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br><br>
+                <b>문제:</b> 한 신사가 보석가게에서 70만원짜리 보석을 사고 100만원짜리 수표를 냈다.<br><br>
+                때마침 현금이 부족하던 보석가게 주인은 거스름돈을 주기 위해 옆의 빵집에 가서 수표를 현금으로 바꾼 뒤 손님에게 30만원을 거슬러주었다.<br><br>
+                그런데 다음날 보석가게 주인이 받았던 수표가 위조 수표임이 드러났다.<br><br>
+                신사는 이미 보석과 거스름돈을 가지고 간 뒤였기에 보석가게 주인은 할 수 없이 빵집 주인에게 100만원을 물어주었다.<br><br>
+                이때 보석상 주인이 입은 피해액은 얼마인가?<br><br><br>
+                <button onclick="location.href='#point15'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello16">
+                이모지 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 이모지를 보고 전부 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <b>주제어:</b> 속담
+                <span class="emoji-quiz"><br>🔥🏡📣</span>
+                <span class="emoji-quiz"><br>💬🧠💸</span>
+                <span class="emoji-quiz"><br>👂➡️👂🙉</span><br><br>
+                <button onclick="location.href='#point4'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello17">
+                노래 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 믹스된 노래들을 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br><br>
+                <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                    <audio id="audio4" src="source/gd.mp3" controls style="width:100%; max-width:600px; border-radius:10px; box-shadow:0 2px 8px #b0b8d8;">
+                        브라우저가 audio 태그를 지원하지 않습니다.
+                    </audio>
+                    <audio id="audio5" src="source/aespa.mp3" controls style="width:100%; max-width:600px; border-radius:10px; box-shadow:0 2px 8px #b0b8d8;">
+                        브라우저가 audio 태그를 지원하지 않습니다.
+                    </audio>
+                    <audio id="audio6" src="source/jennie.mp3" controls style="width:100%; max-width:600px; border-radius:10px; box-shadow:0 2px 8px #b0b8d8;">
+                        브라우저가 audio 태그를 지원하지 않습니다.
+                    </audio><br><br>
+                </div>
+                <button onclick="playAllAudios2()" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#673ab7; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    모두 동시에 재생
+                </button>
+                <button onclick="pauseAllAudios2()" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#b71c1c; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer; margin-left:16px;">
+                    모두 멈춤
+                </button>
+                <script>
+                    function playAllAudios2() {
+                        document.getElementById('audio4').currentTime = 0;
+                        document.getElementById('audio5').currentTime = 0;
+                        document.getElementById('audio6').currentTime = 0;
+                        document.getElementById('audio4').play();
+                        document.getElementById('audio5').play();
+                        document.getElementById('audio6').play();
+                    }
+                    function pauseAllAudios2() {
+                        document.getElementById('audio4').pause();
+                        document.getElementById('audio5').pause();
+                        document.getElementById('audio6').pause();
+                    }
+                </script>
+                <button onclick="location.href='#point22'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello18">
+                상식 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 질문을 보고 정답을 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <b>질문:</b>
+                전류가 도선을 따라 흐르면 그 주위에 자기장이 형성된다는 법칙은<br>1820년 덴마크 과학자가 발표했습니다.<br>전류와 자기 관계를 처음 발견한 이 사람은 누구인가요?<br><br>
+                1) 헬름홀츠<br><br>
+                2) 외르스테드<br><br>
+                3) 패러데이<br><br>
+                4) 유클리드<br><br>
+                <button onclick="location.href='#point1'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello19">
+                명대사 맞추기
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 아래 이미지를 보고 떠오르는 <b>명대사</b>를 맞혀보세요!<br>
+                선택된 조가 정답을 맞추지 못하거나 싱크로율이 떨어지면 다른 조에게 기회가 넘어갑니다.
+            </div>
+            <div style="margin-left:20px; margin-bottom:60px;">
+                <img src="source/a4.jpg" alt="명대사 맞추기 4번" style="width:1020px; border-radius:14px; box-shadow:0 2px 12px #b0b8d8;">
+                <button onclick="location.href='#point9'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello20">
+                릴레이 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 주제에 해당하는 것을 차례대로 한명씩 말하면 됩니다!<br>
+                조원 모두가 겹치지 않게 대답해야 합니다.<br>
+                선택된 조가 틀릴 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <button id="show-hello4-section" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#81efd1; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    주제어
+                </button>
+                <br>
+                <div id="hello4-section" style="display:none; margin-top:18px;">
+                    <h1>포켓몬</h1>
+                </div><br>
+                <button onclick="location.href='#point2'" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#4caf50; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <script>
+                // 주제어1 버튼 클릭 시 hello1-section 보이기
+                document.getElementById('show-hello4-section').onclick = function() {
+                    document.getElementById('hello4-section').style.display = 'block';
+                };
+            </script>
+            <div class="space1000"></div>
+            <h1 id="hello21">
+                넌센스 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 아래 글을 보고 문제를 풀어주시면 됩니다!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br><br>
+                <b>문제:</b> 우산꽂이에 3개의 우산이 꽂혀 있다.<br><br>
+                주인의 이름은 눈에 띄지 않는 곳에 쓰여 있으며, 언뜻 보아서는 분간이 되지 않는 비슷한 우산들이다.<br><br>
+                만약 우산 주인들이 이름을 확인하지 않고 우산을 가져갔다면 2명만이 자신의 우산을 가져갔을 확률은 몇 퍼센트일까?<br><br><br>
+                <button onclick="location.href='#point20'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello22">
+                이모지 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 이모지를 보고 전부 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <b>주제어:</b> 노래
+                <span class="emoji-quiz"><br>🎣🌃🐈</span>
+                <span class="emoji-quiz"><br>🔫🔫🔫</span>
+                <span class="emoji-quiz"><br>⬆⬇</span><br><br>
+                <button onclick="location.href='#point0'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div> 
+            <h1 id="hello23">
+                노래 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 가사를 듣고 노래 제목을 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <audio src="source/reader2.mp3" controls style="width:100%; max-width:600px; border-radius:10px; box-shadow:0 2px 8px #b0b8d8;">
+                 브라우저가 audio 태그를 지원하지 않습니다.
+                 </audio><br><br>
+                <button onclick="location.href='#point5'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello24">
+                상식 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 질문을 보고 정답을 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <b>질문:</b>
+                우유를 오래 두면 산성도가 올라가면서
+                엉겨 유청과 카세인 덩어리로 분리됩니다.<br>
+                이 현상을 이용해 만든 대표적인 치즈 종류는 무엇일까요?<br><br>
+                1) 리코타 치즈<br><br>
+                3) 모차렐라 치즈<br><br>
+                2) 체다 치즈<br><br>
+                4) 파르미지아노 치즈<br><br>
+                <button onclick="location.href='#point18'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello25">
+                명대사 맞추기
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 아래 이미지를 보고 떠오르는 <b>명대사</b>를 맞혀보세요!<br>
+                선택된 조가 정답을 맞추지 못하거나 싱크로율이 떨어지면 다른 조에게 기회가 넘어갑니다.
+            </div>
+            <div style="margin-left:20px; margin-bottom:60px;">
+                <img src="source/a5.jpg" alt="명대사 맞추기 5번" style="width:960px; border-radius:14px; box-shadow:0 2px 12px #b0b8d8;">
+                <button onclick="location.href='#point7'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello26">
+                릴레이 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 주제에 해당하는 것을 차례대로 한명씩 말하면 됩니다!<br>
+                조원 모두가 겹치지 않게 대답해야 합니다.<br>
+                선택된 조가 틀릴 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <button id="show-hello5-section" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#81efd1; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    주제어
+                </button>
+                <br>
+                <div id="hello5-section" style="display:none; margin-top:18px;">
+                    <h1>운동 종목</h1>
+                </div><br>
+                <button onclick="location.href='#point14'" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#4caf50; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <script>
+                // 주제어1 버튼 클릭 시 hello1-section 보이기
+                document.getElementById('show-hello5-section').onclick = function() {
+                    document.getElementById('hello5-section').style.display = 'block';
+                };
+            </script>
+            <div class="space1000"></div>
+            <h1 id="hello27">
+                넌센스 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 아래 글을 보고 문제를 풀어주시면 됩니다!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br><br>
+                <b>문제:</b> 사탕이 50개 들어 있는 병이 10개 있다.<br><br>
+                이를 적당히 반씩 나누어 봉투에 담았더니 20개의 사탕 봉투가 생겼다.<br><br>
+                이때 봉투에 나눠 담은 사탕 수의 평균이 25개가 될 확률은 몇 퍼센트일까?<br><br><br>
+                <button onclick="location.href='#point3'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello28">
+                이모지 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 이모지를 보고 전부 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <b>주제어:</b> 음식
+                <span class="emoji-quiz"><br>💧💧💧💧💧💧</span>
+                <span class="emoji-quiz"><br>🥬⭐</span>
+                <span class="emoji-quiz"><br>🔥⚫⛰️💧</span><br><br>
+                <button onclick="location.href='#point11'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello29">
+                노래 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 믹스된 노래들을 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br><br>
+                <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                    <audio id="audio7" src="source/bnd.mp3" controls style="width:100%; max-width:600px; border-radius:10px; box-shadow:0 2px 8px #b0b8d8;">
+                        브라우저가 audio 태그를 지원하지 않습니다.
+                    </audio>
+                    <audio id="audio8" src="source/ive.mp3" controls style="width:100%; max-width:600px; border-radius:10px; box-shadow:0 2px 8px #b0b8d8;">
+                        브라우저가 audio 태그를 지원하지 않습니다.
+                    </audio>
+                    <audio id="audio9" src="source/woodz.mp3" controls style="width:100%; max-width:600px; border-radius:10px; box-shadow:0 2px 8px #b0b8d8;">
+                        브라우저가 audio 태그를 지원하지 않습니다.
+                    </audio><br><br>
+                </div>
+                <button onclick="playAllAudios3()" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#673ab7; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer;">
+                    모두 동시에 재생
+                </button>
+                <button onclick="pauseAllAudios3()" style="font-size:1.2em; padding:14px 38px; border-radius:10px; background:#b71c1c; color:white; font-weight:bold; border:none; box-shadow:0 2px 8px #b0b8d8; cursor:pointer; margin-left:16px;">
+                    모두 멈춤
+                </button>
+                <script>
+                    function playAllAudios3() {
+                        document.getElementById('audio7').currentTime = 0;
+                        document.getElementById('audio8').currentTime = 0;
+                        document.getElementById('audio9').currentTime = 17;
+                        document.getElementById('audio7').play();
+                        document.getElementById('audio8').play();
+                        document.getElementById('audio9').play();
+                    }
+                    function pauseAllAudios3() {
+                        document.getElementById('audio7').pause();
+                        document.getElementById('audio8').pause();
+                        document.getElementById('audio9').pause();
+                    }
+                </script>
+                <button onclick="location.href='#point17'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h1 id="hello30">
+                상식 퀴즈
+            </h1>
+            <div style="margin-left:20px; margin-bottom:30px; font-size:1.3em; max-width:1200px;">
+                <b>설명:</b> 질문을 보고 정답을 맞춰주세요!<br>
+                선택된 조가 정답을 맞추지 못할 경우 다른 조에게 기회가 넘어갑니다.<br><br>
+                <b>질문:</b>
+                우리가 흔히 쓰는 길이 단위 '1인치'는<br>
+                미터법으로 정확히 몇 cm로 환산되나요?<br><br>
+                1) 1.75cm<br><br>
+                2) 2.54cm<br><br>
+                3) 2.45cm<br><br>
+                4) 3.14cm<br><br>
+                <button onclick="location.href='#point1'" style="font-size:1.2em;padding:14px 38px;border-radius:10px;background:#4caf50;color:white;font-weight:bold;border:none;box-shadow:0 2px 8px #b0b8d8;cursor:pointer;">
+                    정답!
+                </button>
+            </div>
+            <div class="space1000"></div>
+            <h3 id="point0">점수 획득</h3><div class="space300"></div>
+            <h1 class="ppp">1점 획득!</h1>
+            <div class="space1000"></div>
+            <h3 id="point1">점수 획득</h3><div class="space300"></div>
+            <h1 class="ppp">2점 획득!</h1>
+            <div class="space1000"></div>
+            <h3 id="point2">점수 획득</h3><div class="space300"></div>
+            <h1 class="ppp">3점 획득!</h1>
+            <div class="space1000"></div>
+            <h3 id="point3">점수 획득</h3><div class="space300"></div>
+            <h1 class="ppp">5점 획득!</h1>
+            <div class="space1000"></div>
+            <h3 id="point4">이벤트</h3><div class="space300"></div>
+            <h1 class="ppp">무작위 팀에게 1점 뺏기</h1>
+            <div class="space1000"></div>
+            <h3 id="point5">이벤트</h3><div class="space300"></div>
+            <h1 class="ppp">무작위 팀에게 2점 뺏기</h1>
+            <div class="space1000"></div>
+            <h3 id="point6">이벤트</h3><div class="space300"></div>
+            <h1 class="ppp">본인 팀과 선택한 팀 1점씩 획득</h1>
+            <div class="space1000"></div>
+            <h3 id="point7">이벤트</h3><div class="space300"></div>
+            <h1 class="ppp">다음 라운드에 몇점의 변화가 생길지 예측</h1>
+            <h1 class="ppp">예측 성공시 5점 획득</h1>
+            <div class="space1000"></div>
+            <h3 id="point8">폭탄 돌리기</h3><div class="space300"></div>
+            <h1 class="ppp">주사위 숫자 하나 선택</h1>
+            <h1 class="ppp">해당된 팀부터 돌아가면서 주사위</h1>
+            <h1 class="ppp">그 숫자가 걸린팀은 -3점</h1>
+            <div class="space1000"></div>
+            <h3 id="point9">이벤트</h3><div class="space300"></div>
+            <h1 class="ppp">주사위 수만큼 점수 획득</h1>
+            <div class="space1000"></div>
+            <h3 id="point10">이벤트</h3><div class="space300"></div>
+            <h1 class="ppp">본인팀 제외 5점을 나눠주기</h1>
+            <div class="space1000"></div>
+            <h3 id="point11">이벤트</h3><div class="space300"></div>
+            <h1 class="ppp">아무 일도 없었다!</h1>
+            <div class="space1000"></div>
+            <h3 id="point12">이벤트</h3><div class="space300"></div>
+            <h1 class="ppp">주사위 수 배팅(점수는 최대5점)</h1>
+            <h1 class="ppp">주사위 눈은 3개 선택</h1>
+            <h1 class="ppp">맞츨경우 2배, 틀릴경우 매몰</h1>
+            <div class="space1000"></div>
+            <h3 id="point13">선택 이벤트</h3><div class="space300"></div>
+            <div class="pp"><button class="scoreBtn1" style="font-size:2em; padding:20px 40px; border-radius:12px;">A</button>
+            <button class="scoreBtn3" style="font-size:2em; padding:20px 40px; border-radius:12px;">B</button></div>
+            <div class="space1000"></div>  
+            <h3 id="point14">선택 이벤트</h3><div class="space300"></div>
+            <div class="pp"><button class="scoreBtn2" style="font-size:2em; padding:20px 40px; border-radius:12px;">A</button>
+            <button class="scoreBtn10" style="font-size:2em; padding:20px 40px; border-radius:12px;">B</button></div>
+            <div class="space1000"></div>
+            <h3 id="point15">선택 이벤트</h3><div class="space300"></div>
+            <div class="pp"><button class="scoreBtn4" style="font-size:2em; padding:20px 40px; border-radius:12px;">A</button>
+            <button class="scoreBtn6" style="font-size:2em; padding:20px 40px; border-radius:12px;">B</button></div>
+            <div class="space1000"></div>   
+            <h3 id="point16">선택 이벤트</h3><div class="space300"></div>
+            <div class="pp"><button class="scoreBtn5" style="font-size:2em; padding:20px 40px; border-radius:12px;">A</button>
+            <button class="scoreBtn8" style="font-size:2em; padding:20px 40px; border-radius:12px;">B</button></div>
+            <div class="space1000"></div>   
+            <h3 id="point17">선택 이벤트</h3><div class="space300"></div>
+            <h1 class="ppp">점수 3점 휙득 +</h1>
+            <div class="pp"><button class="scoreBtn17" style="font-size:2em; padding:20px 40px; border-radius:12px;">A</button>
+            <button class="scoreBtn7" style="font-size:2em; padding:20px 40px; border-radius:12px;">B</button>
+            <button class="scoreBtn14" style="font-size:2em; padding:20px 40px; border-radius:12px;">C</button></div>
+            <div class="space1000"></div>
+            <h3 id="point18">선택 이벤트</h3><div class="space300"></div>
+            <div class="pp"><button class="scoreBtn11" style="font-size:2em; padding:20px 40px; border-radius:12px;">A</button>
+            <button class="scoreBtn1" style="font-size:2em; padding:20px 40px; border-radius:12px;">B</button>
+            <button class="scoreBtn5" style="font-size:2em; padding:20px 40px; border-radius:12px;">C</button></div>
+            <div class="space1000"></div>  
+            <h3 id="point19">선택 이벤트</h3><div class="space300"></div>
+            <div class="pp"><button class="scoreBtn16" style="font-size:2em; padding:20px 40px; border-radius:12px;">A</button>
+            <button class="scoreBtn3" style="font-size:2em; padding:20px 40px; border-radius:12px;">B</button>
+            <button class="scoreBtn18" style="font-size:2em; padding:20px 40px; border-radius:12px;">C</button></div>
+            <div class="space1000"></div>  
+            <h3 id="point20">선택 이벤트</h3><div class="space300"></div>
+            <div class="pp"><button class="scoreBtn19" style="font-size:2em; padding:20px 40px; border-radius:12px;">A</button>
+            <button class="scoreBtn4" style="font-size:2em; padding:20px 40px; border-radius:12px;">B</button>
+            <button class="scoreBtn12" style="font-size:2em; padding:20px 40px; border-radius:12px;">C</button></div>
+            <div class="space1000"></div>  
+            <h3 id="point21">선택 이벤트</h3><div class="space300"></div>
+            <div class="pp"><button class="scoreBtn9" style="font-size:2em; padding:20px 40px; border-radius:12px;">A</button>
+            <button class="scoreBtn7" style="font-size:2em; padding:20px 40px; border-radius:12px;">B</button>
+            <button class="scoreBtn13" style="font-size:2em; padding:20px 40px; border-radius:12px;">C</button></div>
+            <div class="space1000"></div>  
+            <h3 id="point22">선택 이벤트</h3><div class="space300"></div>
+            <div class="pp"><button class="scoreBtn10" style="font-size:2em; padding:20px 40px; border-radius:12px;">A</button>
+            <button class="scoreBtn15" style="font-size:2em; padding:20px 40px; border-radius:12px;">B</button>
+            <button class="scoreBtn2" style="font-size:2em; padding:20px 40px; border-radius:12px;">C</button></div>
+            <div class="space1000"></div>  
+        </div>
     </div>
-
-    <div class="container">
-        <!-- 1조 -->
-        <div class="group group1" id="group1">
-            <button class="up" data-group="1">↑</button>
-            <div class="score-box" id="number1">1조: 0</div>
-            <button class="down" data-group="1">↓</button>
-        </div>
-
-        <!-- 2조 -->
-        <div class="group group2" id="group2">
-            <button class="up" data-group="2">↑</button>
-            <div class="score-box" id="number2">2조: 0</div>
-            <button class="down" data-group="2">↓</button>
-        </div>
-
-        <!-- 3조 -->
-        <div class="group group3" id="group3">
-            <button class="up" data-group="3">↑</button>
-            <div class="score-box" id="number3">3조: 0</div>
-            <button class="down" data-group="3">↓</button>
-        </div>
-
-        <!-- 4조 -->
-        <div class="group group4" id="group4">
-            <button class="up" data-group="4">↑</button>
-            <div class="score-box" id="number4">4조: 0</div>
-            <button class="down" data-group="4">↓</button>
-        </div>
-
-        <!-- 5조 -->
-        <div class="group group5" id="group5">
-            <button class="up" data-group="5">↑</button>
-            <div class="score-box" id="number5">5조: 0</div>
-            <button class="down" data-group="5">↓</button>
-        </div>
-    </div>
-
     <script>
-        // 각 그룹의 점수를 관리하는 객체
-        const scores = {
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0
-        };
+        // 로컬 스토리지에서 점수 불러오기
+        const savedScores = JSON.parse(localStorage.getItem('scores'));
+        const scores = savedScores || { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+        // 점수 초기화 함수
+        function resetScores() {
+            if (!confirm('진짜 리셋하겠습니까?')) return;
+            for (let group in scores) {
+                scores[group] = 0;
+            }
+            localStorage.removeItem('scores');
+            for (let group in scores) {
+                updateDisplay(group);
+            }
+        }
+
+        // 점수 업데이트 함수
+        function updateDisplay(group) {
+            const numberDisplay = document.getElementById(`number${group}`);
+            numberDisplay.textContent = `${group}조: ${scores[group]}`;
+            localStorage.setItem('scores', JSON.stringify(scores));
+        }
 
         // 버튼 클릭 이벤트 리스너 추가
         document.querySelectorAll('.up').forEach(button => {
@@ -212,33 +1036,183 @@
             });
         });
 
-        // 점수 업데이트 함수
-        function updateDisplay(group) {
-            const numberDisplay = document.getElementById(`number${group}`);
-            numberDisplay.textContent = `${group}조: ${scores[group]}`;
+        // 초기 점수 화면에 표시
+        for (let group in scores) {
+            updateDisplay(group);
         }
-    </script>
 
-    <script>
+        // 30개 버튼 생성 (6x5)
+        const specialButtonsDiv = document.getElementById('special-buttons');
+        for (let i = 1; i <= 30; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'special';
+            btn.textContent = i;
+            btn.onclick = function() { handleClick(this, 'hello' + i); };
+            specialButtonsDiv.appendChild(btn);
+        }
+
+        // 버튼 클릭 시 해당 섹션으로 스크롤
         function handleClick(button, targetId) {
-            // 버튼 텍스트를 "X"로 변경
             button.textContent = "X";
-
-            // 버튼 스타일을 변경하여 "X" 버튼처럼 보이게
             button.classList.add("x");
-
-            // 링크 기능을 비활성화
             button.onclick = function (event) {
-                event.preventDefault();  // 링크 클릭을 막음
+                event.preventDefault();
             };
-
-            // targetId에 해당하는 h1 태그로 스크롤 이동
             const target = document.getElementById(targetId);
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 30,
+                    behavior: 'instant'
+                });
+            }
+        }
+        
+        // 돌아가기 버튼 - 상단으로 스크롤
+        function scrollToTop() {
             window.scrollTo({
-                top: target.offsetTop - 100, // 조정 가능한 오프셋
-                behavior: 'instant' // 즉시 이동
+                top: 0,
+                behavior: 'instant'
             });
         }
+
+        // 주사위 결과 사라짐 타이머를 저장할 변수
+        let diceTimeout = null;
+
+        function rollDice() {
+            const diceDiv = document.getElementById('dice-result');
+            // 이전 타이머가 있으면 취소(연타시 항상 2초 뒤에 사라지도록)
+            if (diceTimeout) {
+                clearTimeout(diceTimeout);
+                diceTimeout = null;
+            }
+            // 1~6 중 임의의 숫자
+            const result = Math.floor(Math.random() * 6) + 1;
+            diceDiv.textContent = `${result}`;
+            diceDiv.style.display = 'block';
+            diceDiv.style.opacity = '1';
+            // 2초 후 사라지게
+            diceTimeout = setTimeout(() => {
+                diceDiv.style.opacity = '0';
+                setTimeout(() => {
+                    diceDiv.style.display = 'none';
+                }, 400);
+            }, 2000);
+        }
+        // 점수 버튼 클릭 이벤트
+                document.querySelectorAll('.scoreBtn1').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "1점 획득!";
+                    this.style.background = "#ffe6a5";
+                };
+            });
+            document.querySelectorAll('.scoreBtn2').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "2점 획득!";
+                    this.style.background = "#fff2a5";
+                };
+            });
+            document.querySelectorAll('.scoreBtn3').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "3점 획득!";
+                    this.style.background = "#ffffa5";
+                };
+            });
+            document.querySelectorAll('.scoreBtn4').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "5점 획득!";
+                    this.style.background = "#ffd600";
+                };
+            });
+            document.querySelectorAll('.scoreBtn5').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "1점 차감!";
+                    this.style.background = "#ffcaa5";
+                };
+            });
+            document.querySelectorAll('.scoreBtn6').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "2점 차감!";
+                    this.style.background = "#ffb7a5";
+                };
+            });
+            document.querySelectorAll('.scoreBtn7').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "3점 차감!";
+                    this.style.background = "#ffa5a5";
+                };
+            });
+            document.querySelectorAll('.scoreBtn8').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "1점 뺏기(지정)";
+                    this.style.background = "#d0ffa5";
+                };
+            });
+            document.querySelectorAll('.scoreBtn9').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "2점 뺏기(지정)";
+                    this.style.background = "#bcffa5";
+                };
+            });
+            document.querySelectorAll('.scoreBtn10').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "1점 뺏기(랜덤)";
+                    this.style.background = "#a5ffbd";
+                };
+            });
+            document.querySelectorAll('.scoreBtn11').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "2점 뺏기(랜덤)";
+                    this.style.background = "#a5ffd8";
+                };
+            });
+            document.querySelectorAll('.scoreBtn12').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "점수 바꾸기(랜덤)";
+                    this.style.background = "#a5caff";
+                };
+            });
+            document.querySelectorAll('.scoreBtn13').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "점수 바꾸기(지정)";
+                    this.style.background = "#a5aeff";
+                };
+            });
+            document.querySelectorAll('.scoreBtn14').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "다음팀 순서 패스";
+                    this.style.background = "#a5ffac";
+                };
+            });
+            document.querySelectorAll('.scoreBtn15').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "순서 역순으로 진행";
+                    this.style.background = "#bea5ff";
+                };
+            });
+            document.querySelectorAll('.scoreBtn16').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "모든팀 점수 리셋";
+                    this.style.background = "#757575";
+                };
+            });
+            document.querySelectorAll('.scoreBtn17').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "다음팀 문제 대신 선택해주기";
+                    this.style.background = "#e9a5ff";
+                };
+            });
+            document.querySelectorAll('.scoreBtn18').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "모든팀에게 1점씩 주기";
+                    this.style.background = "#faa5ff";
+                };
+            });
+            document.querySelectorAll('.scoreBtn19').forEach(function(btn){
+                btn.onclick = function() {
+                    this.textContent = "모든팀에게 1점씩 받기";
+                    this.style.background = "#ffffff";
+                };
+            });
     </script>
 </body>
 </html>
