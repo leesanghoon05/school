@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>25/1 데클과 채플</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            padding: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab.active {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: #666;
+        }
+
+        .chapel-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .chapel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .chapel-date {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .chapel-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .chapel-verse {
+            background: #f8f9ff;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 15px 0;
+            font-style: italic;
+            color: #555;
+        }
+
+        .chapel-summary {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .chapel-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .file-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .file-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .file-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .file-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .timeline-inner {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        a {
+            font-size: 1.3rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid #e0e7ff;
+            transition: color 0.2s, border-bottom 0.2s;
+            padding: 2px 2px 1px 2px;
+            border-radius: 4px;
+        }
+
+        a:hover, a:focus {
+            color: #764ba2;
+            background: #f3f0fa;
+            border-bottom: 2px solid #764ba2;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .chapel-card {
+                padding: 20px;
+            }
+
+            .file-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .timeline-inner {
+                max-width: 98vw;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>2025년 1학기 데클과 채플</h1>
+            <p>2025년 3월 11일 ~ 2025년 5월 27일</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">7</div>
+                <div class="stat-label">실제 진행 횟수</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">진행 개월</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">4</div>
+                <div class="stat-label">자료 파일</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('chapel-list')">📋 채플 목록</div>
+            <div class="tab" onclick="showTab('resources')">📁 자료실</div>
+            <div class="tab" onclick="showTab('timeline')">📅 타임라인</div>
+        </div>
+
+        <div id="chapel-list" class="content active">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="주차, 날짜로 검색하세요..." onkeyup="searchChapels(this.value)">
+            </div>
+
+            <div id="chapel-cards">
+                <div class="chapel-card" data-search="3월 11일 1주차">
+                    <div class="chapel-date">2025년 3월 11일 (화)</div>
+                    <h3 class="chapel-title">📿 1주차 채플</h3>
+                    <div class="chapel-verse">
+                        <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EQ17eN8XlCFOjFGrR4bMtgEBCh56cjJRelbejBBDR0fF8A?e=D5keZh" target="_blank">1주차 ppt</a>
+                    </div>
+                    <div class="chapel-summary">
+                        <ul style="text-align:left; margin:10px 0 0 18px;">
+                            <li><strong>채플 오리엔테이션</strong> : 앞으로 진행될 채플 일정과 방식 안내</li>
+                            <li><strong>채플 시간 안내</strong> : 15분 소그룹 + 레크레이션 20분</li>
+                            <li><strong>채플 출석 안내</strong> : 출석 체크 및 규정 설명</li>
+                            <li><strong>교수님/공동체 리더/코디/팀원 소개</strong></li>
+                            <li><strong>공동체 임원 & BSM 임원 모집</strong></li>
+                            <li><strong>간단한 퀴즈</strong> 후 마무리</li>
+                        </ul>
+                    </div>
+                    <div class="chapel-tags">
+                        <span class="tag">1주차</span>
+                        <span class="tag">오리엔테이션</span>
+                    </div>
+                </div>
+
+                <div class="chapel-card" data-search="3월 18일 2주차">
+                    <div class="chapel-date">2025년 3월 18일 (화)</div>
+                    <h3 class="chapel-title">📿 2주차 채플</h3>
+                    <div class="chapel-verse">
+                        <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EQ-CMP1y_olCqMWtuXlhqaYBtGGOn_9gcQnst0CSjcAKww?e=jaJfcE" target="_blank">2주차 ppt</a>
+                    </div>
+                    <div class="chapel-summary">
+                        <ul style="text-align:left; margin:10px 0 0 18px;">
+                            <li><strong>소그룹 편성 결과 안내</strong> : 각 소그룹별 멤버 발표</li>
+                            <li><strong>소그룹 시간</strong> : 소그룹별 친목 및 교제</li>
+                            <li><strong>레크레이션</strong> : 첫인상 롤링페이퍼 진행</li>
+                            <li><strong>마니또 1차 뽑기</strong> : 마니또 게임 시작!</li>
+                        </ul>
+                    </div>
+                    <div class="chapel-tags">
+                        <span class="tag">2주차</span>
+                        <span class="tag">소그룹</span>
+                        <span class="tag">마니또</span>
+                        <span class="tag">롤링페이퍼</span>
+                    </div>
+                </div>
+
+                <div class="chapel-card" data-search="3월 25일 3주차">
+                    <div class="chapel-date">2025년 3월 25일 (화)</div>
+                    <h3 class="chapel-title">📿 3주차 채플</h3>
+                    <div class="chapel-verse">
+                        <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EayTUIhXrqlEqlP8E40qTe4BPWZUZqHZF5pZ9UH9xP8r4A?e=yN7XgM" target="_blank">3주차 ppt</a><br>
+                        <a href="https://1drv.ms/t/c/6f9e6c02e24cb4b7/EeliweIteyVDmhJDI0vmQTEBLe4nahx3g_5LqMlgXDxBpg?e=TmrUoR" target="_blank">3주차 레크레이션</a>
+                    </div>
+                    <div class="chapel-summary">
+                        <ul style="text-align:left; margin:10px 0 0 18px;">
+                            <li><strong>소그룹 활동</strong> : 소그룹별 친목 및 교제</li>
+                            <li><strong>레크레이션</strong> : 그림 이어그리기 게임 진행</li>
+                            <li><strong>마니또</strong> : 1차 마니또 마무리, 2차 마니또 시작</li>
+                        </ul>
+                    </div>
+                    <div class="chapel-tags">
+                        <span class="tag">3주차</span>
+                        <span class="tag">소그룹</span>
+                        <span class="tag">마니또</span>
+                        <span class="tag">그림이어그리기</span>
+                    </div>
+                </div>
+
+                <div class="chapel-card" data-search="4월 1일 4주차 마니또">
+                    <div class="chapel-date">2025년 4월 1일 (화)</div>
+                    <h3 class="chapel-title">📿 4주차 채플</h3>
+                    <div class="chapel-verse">
+                        <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EUGf052eOUNHkofNiGvanSsBak-cNn_8B9sQYyEbmP2DYw?e=eZu3zX" target="_blank">4주차 ppt</a><br>
+                        <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EanLESHWENBFok3nZ6EcK2wB179cOj7M7gPY1-9sN1i75w?e=wB0oi8" target="_blank">1차 마니또 투표(임원용)</a><br>
+                        <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EcktLhiTE51OqoV7l9lFQpQBk10MIuY2NHCdRWnDD5YUTw?e=AVQO1V" target="_blank">2차 마니또 투표(임원용)</a><br>
+                        <a href="https://1drv.ms/x/c/6f9e6c02e24cb4b7/EcMZBSMGz_FCgv3avG02XocBDql6tuyyEuX96s5auEQ7Jg?e=y5YiuI" target="_blank">마니또 이벤트 카운트</a>
+                    </div>
+                    <div class="chapel-summary">
+                        <ul style="text-align:left; margin:10px 0 0 18px;">
+                            <li><strong>소그룹 활동</strong> : 소그룹별 친목 및 교제</li>
+                            <li><strong>마니또 결산</strong> : 1차, 2차 마니또 결산 및 선물 증정</li>
+                            <li><strong>조 결산</strong> : 각 조별 활동 결산 및 선물 증정</li>
+                        </ul>
+                    </div>
+                    <div class="chapel-tags">
+                        <span class="tag">4주차</span>
+                        <span class="tag">소그룹</span>
+                        <span class="tag">마니또</span>
+                        <span class="tag">조결산</span>
+                    </div>
+                </div>
+
+                <div class="chapel-card" data-search="4월 8일 5주차">
+                    <div class="chapel-date">2025년 4월 8일 (화)</div>
+                    <h3 class="chapel-title">📿 5주차 채플</h3>
+                    <div class="chapel-verse">
+                        <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EcX00R5KwPREj8y96fVbUZIBiwMkxJjywTMnw23DjE8zzA?e=2gN1Ru" target="_blank">5주차 ppt</a>
+                    </div>
+                    <div class="chapel-summary">
+                        <ul style="text-align:left; margin:10px 0 0 18px;">
+                            <li><strong>새로운 조 소그룹</strong> : 새롭게 편성된 조로 소그룹 활동</li>
+                            <li><strong>벚꽃 단체사진</strong> : 모두 함께 밖에 나가 벚꽃 아래에서 단체사진 촬영</li>
+                            <li><strong>조별 사진 공모전</strong> : 각 조별로 사진을 찍어 공모전 진행</li>
+                        </ul>
+                    </div>
+                    <div class="chapel-tags">
+                        <span class="tag">5주차</span>
+                        <span class="tag">소그룹</span>
+                        <span class="tag">벚꽃</span>
+                        <span class="tag">사진공모전</span>
+                    </div>
+                </div>
+
+                <div class="chapel-card" data-search="5월 20일 9주차">
+                    <div class="chapel-date">2025년 5월 20일 (화)</div>
+                    <h3 class="chapel-title">📿 9주차 채플</h3>
+                    <div class="chapel-verse">
+                        <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EX6zO-f-9uJPuyKozrGOi5UBbDjWbXnVnPknHUjSFUobhw?e=rfEFXN" target="_blank">9주차 ppt</a>
+                    </div>
+                    <div class="chapel-summary">
+                        <ul style="text-align:left; margin:10px 0 0 18px;">
+                            <li><strong>소그룹 활동</strong> : 소그룹별 친목 및 교제</li>
+                            <li><strong>조별 사진 보상</strong> : 지난 조별 사진 공모전 결과에 따른 보상 제공</li>
+                            <li><strong>레크레이션</strong> : 확대 축소 퀴즈, 숨은 인물 맞추기 게임 진행</li>
+                        </ul>
+                    </div>
+                    <div class="chapel-tags">
+                        <span class="tag">9주차</span>
+                        <span class="tag">소그룹</span>
+                        <span class="tag">사진보상</span>
+                        <span class="tag">확대 이미지 퀴즈</span>
+                        <span class="tag">숨은인물 퀴즈</span>
+                    </div>
+                </div>
+
+                <div class="chapel-card" data-search="5월 27일 10주차">
+                    <div class="chapel-date">2025년 5월 27일 (화)</div>
+                    <h3 class="chapel-title">📿 10주차 채플</h3>
+                    <div class="chapel-verse">
+                        <a href="https://leesanghoon05.github.io/school/secondweb.html" target="_blank">10주차 레크레이션</a>
+                    </div>
+                    <div class="chapel-summary">
+                        <ul style="text-align:left; margin:10px 0 0 18px;">
+                            <li><strong>간식 타임</strong> : 과자와 음료를 나누며 자유롭게 이야기</li>
+                            <li><strong>퀴즈 레크레이션</strong> : 준비한 퀴즈로 모두 함께 즐거운 시간</li>
+                            <li><strong>마무리</strong> : 한 학기 채플을 마무리</li>
+                        </ul>
+                    </div>
+                    <div class="chapel-tags">
+                        <span class="tag">10주차</span>
+                        <span class="tag">마지막</span>
+                        <span class="tag">간식</span>
+                        <span class="tag">퀴즈</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="resources" class="content">
+            <h2 style="color: white; text-align: center; margin-bottom: 30px;">📁 자료실</h2>
+            
+                <div class="file-grid">
+                    <div class="file-card">
+                        <div class="file-icon">📑</div>
+                        <div class="file-title">채플 1~3주차 PPT</div>
+                        <div class="file-desc">채플 진행의 사용된 PPT</div>
+                        <div class="file-buttons" style="display: flex; gap: 10px; justify-content: center;">
+                            <a href="#" class="download-btn" onclick="downloadFile('source/CH_1_1.zip')">다운로드</a>
+                        </div>
+                    </div>
+                    <div class="file-card">
+                        <div class="file-icon">📑</div>
+                        <div class="file-title">채플 4~9주차 PPT</div>
+                        <div class="file-desc">채플 진행의 사용된 PPT</div>
+                        <div class="file-buttons" style="display: flex; gap: 10px; justify-content: center;">
+                            <a href="#" class="download-btn" onclick="downloadFile('source/CH_1_2.zip')">다운로드</a>
+                        </div>
+                    </div>
+                    <div class="file-card">
+                        <div class="file-icon">🎲</div>
+                        <div class="file-title">레크레이션 보조 자료</div>
+                        <div class="file-desc">레크레이션 및 보조 활동에 사용된 자료</div>
+                        <div class="file-buttons" style="display: flex; gap: 10px; justify-content: center;">
+                            <a href="#" class="download-btn" onclick="downloadFile('source/CH_1_3.zip')">다운로드</a>
+                        </div>
+                    </div>
+                    <div class="file-card">
+                        <div class="file-icon">🗂️</div>
+                        <div class="file-title">채플 회의 자료</div>
+                        <div class="file-desc">전체적인 진행을 도와준 자료</div>
+                        <div class="file-buttons" style="display: flex; gap: 10px; justify-content: center;">
+                            <a href="#" class="download-btn" onclick="downloadFile('source/CH_DAY.docx')">다운로드</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="timeline" class="content">
+            <h2 style="color: white; text-align: center; margin-bottom: 30px;">📅 채플 진행 타임라인</h2>
+            <div class="timeline-inner">
+                <div style="text-align: center; margin-bottom: 20px; padding: 15px; background: #f8f9ff; border-radius: 10px; border-left: 4px solid #667eea;">
+                    <em>민감한 정보가 포함되어 있기에 무분별한 배포는 금해주세요!</em><br>
+                    <em>📋 채플 회의는 채플 전주에 만나 회의를 진행하였습니다.</em>
+                </div>
+                <h3 style="color: #667eea; margin-bottom: 20px;">2025년 1학기 채플 진행 기록</h3>
+                <div style="border-left: 3px solid #667eea; padding-left: 20px;">
+                    <div style="margin-bottom: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                        <div style="font-weight: bold; color: #333; margin-bottom: 5px;">📅 3월 11일 - 1주차 채플</div>
+                        <div style="color: #666; font-size: 0.9em;">
+                            오리엔테이션, 교수님·임원·팀원 소개, 임원 모집, 간단한 퀴즈
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                        <div style="font-weight: bold; color: #333; margin-bottom: 5px;">📅 3월 18일 - 2주차 채플</div>
+                        <div style="color: #666; font-size: 0.9em;">
+                            소그룹, 첫인상 롤링페이퍼, 마니또 1차 뽑기
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                        <div style="font-weight: bold; color: #333; margin-bottom: 5px;">📅 3월 25일 - 3주차 채플</div>
+                        <div style="color: #666; font-size: 0.9em;">
+                            소그룹, 그림 이어그리기, 마니또 1차 마무리 & 2차 시작
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                        <div style="font-weight: bold; color: #333; margin-bottom: 5px;">📅 4월 1일 - 4주차 채플</div>
+                        <div style="color: #666; font-size: 0.9em;">
+                            소그룹, 1·2차 마니또 결산, 조 결산
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                        <div style="font-weight: bold; color: #333; margin-bottom: 5px;">📅 4월 8일 - 5주차 채플</div>
+                        <div style="color: #666; font-size: 0.9em;">
+                            새로운 조 소그룹, 벚꽃 단체사진, 조별 사진 공모전
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; padding: 15px; background: #ffe6e6; border-radius: 8px;">
+                        <div style="font-weight: bold; color: #333; margin-bottom: 5px;">📅 4월 15일 - 6주차 채플</div>
+                        <div style="color: #cc0000; font-size: 0.9em; font-weight: bold;">❌ 시험 전주라 휴식 - 패스</div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; padding: 15px; background: #ffe6e6; border-radius: 8px;">
+                        <div style="font-weight: bold; color: #333; margin-bottom: 5px;">📅 4월 22일 - 7주차 채플</div>
+                        <div style="color: #cc0000; font-size: 0.9em; font-weight: bold;">❌ 온라인주간 - 패스</div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; padding: 15px; background: #ffe6e6; border-radius: 8px;">
+                        <div style="font-weight: bold; color: #333; margin-bottom: 5px;">📅 5월 13일 - 8주차 채플</div>
+                        <div style="color: #cc0000; font-size: 0.9em; font-weight: bold;">❌ 사나축 - 부스 참여 사진으로 대체 - 패스</div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                        <div style="font-weight: bold; color: #333; margin-bottom: 5px;">📅 5월 20일 - 9주차 채플</div>
+                        <div style="color: #666; font-size: 0.9em;">
+                            소그룹, 조별 사진 보상, 확대 축소 퀴즈, 숨은 인물 맞추기
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                        <div style="font-weight: bold; color: #333; margin-bottom: 5px;">📅 5월 27일 - 10주차 채플</div>
+                        <div style="color: #666; font-size: 0.9em;">
+                            마지막 채플, 간식 타임, 퀴즈 레크레이션
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; padding: 15px; background: #ffe6e6; border-radius: 8px;">
+                        <div style="font-weight: bold; color: #333; margin-bottom: 5px;">📅 6월 3일 - 11주차 채플</div>
+                        <div style="color: #cc0000; font-size: 0.9em; font-weight: bold;">❌ 시험 전주라 휴식 - 패스</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // 모든 탭과 컨텐츠 숨기기
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // 선택된 탭 활성화
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        function searchChapels(searchTerm) {
+            const cards = document.querySelectorAll('.chapel-card');
+            const term = searchTerm.toLowerCase();
+            
+            cards.forEach(card => {
+                const searchData = card.getAttribute('data-search').toLowerCase();
+                const title = card.querySelector('.chapel-title').textContent.toLowerCase();
+                const summary = card.querySelector('.chapel-summary').textContent.toLowerCase();
+                const verse = card.querySelector('.chapel-verse').textContent.toLowerCase();
+                
+                if (searchData.includes(term) || title.includes(term) || summary.includes(term) || verse.includes(term)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function downloadFile(fileName) {
+            // 실제 다운로드 동작
+            const a = document.createElement('a');
+            a.href = fileName;
+            a.setAttribute('download', '');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // 부드러운 스크롤 효과
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.chapel-card, .file-card');
+            
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.6s ease-in-out';
+                    }
+                });
+            });
+            
+            cards.forEach(card => observer.observe(card));
+        });
+    </script>
+</body>
+</html>
