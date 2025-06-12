@@ -68,6 +68,25 @@ h1 {
     text-align: center;
     font-weight: 500;
     color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.favorite-star {
+    cursor: pointer;
+    font-size: 18px;
+    color: #ddd;
+    transition: color 0.3s ease;
+}
+
+.favorite-star:hover {
+    color: #ffd700;
+}
+
+.favorite-star.active {
+    color: #ffd700;
 }
 
 .category-nav {
@@ -131,6 +150,19 @@ h1 {
     font-size: 14px;
     margin-left: 10px;
     vertical-align: middle;
+}
+
+.favorites-section {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.favorites-section .category-title {
+    border-bottom-color: #ffd700;
+    color: #b8860b;
 }
 
 @media (min-width: 768px) {
