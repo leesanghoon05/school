@@ -24,64 +24,209 @@
 
     <h1>베이스 연습곡 <span class="page-badge">보통</span></h1>
 
-    <div class="category">
-        <div class="category-title">중급자용 베이스 연습곡</div>
-        <div class="video-container">
-          <div class="video-item">
-              <div class="responsive-iframe">
-                  <iframe src="https://www.youtube.com/embed/IFwfllRckSo?si=KTfdB-PNbU8qJzo9" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-              <div class="video-title">베텔기우스 - 유우리</div>
-          </div>
-          <div class="video-item">
-              <div class="responsive-iframe">
-                  <iframe src="https://www.youtube.com/embed/Pxn4J9DyQZA?si=gb_qmoCohQQ6V6pn" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-              <div class="video-title">Some Like It Hot - SPYAIR</div>
-          </div>
-          <div class="video-item">
-              <div class="responsive-iframe">
-                  <iframe src="https://www.youtube.com/embed/TNC-rYMOPoc?si=jnde5LJ8Fiuu5MGe" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-              <div class="video-title">NIGHT DANCER - imase</div>
-          </div>
-          <div class="video-item">
-              <div class="responsive-iframe">
-                  <iframe src="https://www.youtube.com/embed/WtWF2BSVLIc?si=fPvsLKIX2-fuNIG5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-              <div class="video-title">대관람차 - QWER</div>
-          </div>
-          <div class="video-item">
-              <div class="responsive-iframe">
-                  <iframe src="https://www.youtube.com/embed/6JbfXayy2jI?si=SXeA2RhFJFfbY0wJ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-              <div class="video-title">잊어주세요 - Yorushika</div>
-          </div>
-          <div class="video-item">
-              <div class="responsive-iframe">
-                  <iframe src="https://www.youtube.com/embed/aem73t0x3d4?si=6v0SMVLZWFe8qmt-" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-              <div class="video-title">낙화 - 루시</div>
-          </div>
-          <div class="video-item">
-              <div class="responsive-iframe">
-                  <iframe src="https://www.youtube.com/embed/H7ZvetIEzM4?si=smqXf0Wrqm5b4G4I" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-              <div class="video-title">회전목마 - sokodomo</div>
-          </div>
-          <div class="video-item">
-              <div class="responsive-iframe">
-                  <iframe src="https://www.youtube.com/embed/fwZpmafHJn8?si=9a33GNAl-v3eOmiD" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-              <div class="video-title">선잠 - 레이나</div>
-          </div>
-          <div class="video-item">
-              <div class="responsive-iframe">
-                  <iframe src="https://www.youtube.com/embed/vuljLqrZ2mg?si=Q6GfRF0EN9GXuOgP" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-              <div class="video-title">청춘서약 - QWER</div>
-          </div>
+    <!-- 즐겨찾기 섹션 -->
+    <div class="category favorites-section" id="favorites-section" style="display: none;">
+        <div class="category-title">⭐ 즐겨찾기</div>
+        <div class="video-container" id="favorites-container">
+            <!-- 즐겨찾기 동영상들이 여기에 표시됩니다 -->
         </div>
     </div>
+
+    <div class="category">
+        <div class="category-title">중급자용 베이스 연습곡</div>
+        <div class="video-container" id="main-container">
+            <div class="video-item" data-video-id="IFwfllRckSo" data-title="베텔기우스 - 유우리">
+                <div class="responsive-iframe">
+                    <iframe src="https://www.youtube.com/embed/IFwfllRckSo?si=KTfdB-PNbU8qJzo9" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="video-title">
+                    베텔기우스 - 유우리
+                    <i class="fas fa-star favorite-star" data-video-id="IFwfllRckSo"></i>
+                </div>
+            </div>
+            <div class="video-item" data-video-id="Pxn4J9DyQZA" data-title="Some Like It Hot - SPYAIR">
+                <div class="responsive-iframe">
+                    <iframe src="https://www.youtube.com/embed/Pxn4J9DyQZA?si=gb_qmoCohQQ6V6pn" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="video-title">
+                    Some Like It Hot - SPYAIR
+                    <i class="fas fa-star favorite-star" data-video-id="Pxn4J9DyQZA"></i>
+                </div>
+            </div>
+            <div class="video-item" data-video-id="TNC-rYMOPoc" data-title="NIGHT DANCER - imase">
+                <div class="responsive-iframe">
+                    <iframe src="https://www.youtube.com/embed/TNC-rYMOPoc?si=jnde5LJ8Fiuu5MGe" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="video-title">
+                    NIGHT DANCER - imase
+                    <i class="fas fa-star favorite-star" data-video-id="TNC-rYMOPoc"></i>
+                </div>
+            </div>
+            <div class="video-item" data-video-id="WtWF2BSVLIc" data-title="대관람차 - QWER">
+                <div class="responsive-iframe">
+                    <iframe src="https://www.youtube.com/embed/WtWF2BSVLIc?si=fPvsLKIX2-fuNIG5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="video-title">
+                    대관람차 - QWER
+                    <i class="fas fa-star favorite-star" data-video-id="WtWF2BSVLIc"></i>
+                </div>
+            </div>
+            <div class="video-item" data-video-id="6JbfXayy2jI" data-title="잊어주세요 - Yorushika">
+                <div class="responsive-iframe">
+                    <iframe src="https://www.youtube.com/embed/6JbfXayy2jI?si=SXeA2RhFJFfbY0wJ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="video-title">
+                    잊어주세요 - Yorushika
+                    <i class="fas fa-star favorite-star" data-video-id="6JbfXayy2jI"></i>
+                </div>
+            </div>
+            <div class="video-item" data-video-id="aem73t0x3d4" data-title="낙화 - 루시">
+                <div class="responsive-iframe">
+                    <iframe src="https://www.youtube.com/embed/aem73t0x3d4?si=6v0SMVLZWFe8qmt-" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="video-title">
+                    낙화 - 루시
+                    <i class="fas fa-star favorite-star" data-video-id="aem73t0x3d4"></i>
+                </div>
+            </div>
+            <div class="video-item" data-video-id="H7ZvetIEzM4" data-title="회전목마 - sokodomo">
+                <div class="responsive-iframe">
+                    <iframe src="https://www.youtube.com/embed/H7ZvetIEzM4?si=smqXf0Wrqm5b4G4I" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="video-title">
+                    회전목마 - sokodomo
+                    <i class="fas fa-star favorite-star" data-video-id="H7ZvetIEzM4"></i>
+                </div>
+            </div>
+            <div class="video-item" data-video-id="fwZpmafHJn8" data-title="선잠 - 레이나">
+                <div class="responsive-iframe">
+                    <iframe src="https://www.youtube.com/embed/fwZpmafHJn8?si=9a33GNAl-v3eOmiD" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="video-title">
+                    선잠 - 레이나
+                    <i class="fas fa-star favorite-star" data-video-id="fwZpmafHJn8"></i>
+                </div>
+            </div>
+            <div class="video-item" data-video-id="vuljLqrZ2mg" data-title="청춘서약 - QWER">
+                <div class="responsive-iframe">
+                    <iframe src="https://www.youtube.com/embed/vuljLqrZ2mg?si=Q6GfRF0EN9GXuOgP" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="video-title">
+                    청춘서약 - QWER
+                    <i class="fas fa-star favorite-star" data-video-id="vuljLqrZ2mg"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 로컬 스토리지 키
+        const FAVORITES_KEY = 'bass-medium-favorites';
+
+        // 즐겨찾기 데이터 로드
+        function loadFavorites() {
+            const favorites = localStorage.getItem(FAVORITES_KEY);
+            return favorites ? JSON.parse(favorites) : [];
+        }
+
+        // 즐겨찾기 데이터 저장
+        function saveFavorites(favorites) {
+            localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+        }
+
+        // 즐겨찾기 추가/제거
+        function toggleFavorite(videoId) {
+            const favorites = loadFavorites();
+            const index = favorites.findIndex(fav => fav.id === videoId);
+            
+            if (index === -1) {
+                // 즐겨찾기 추가
+                const videoElement = document.querySelector(`[data-video-id="${videoId}"]`);
+                const title = videoElement.getAttribute('data-title');
+                const iframe = videoElement.querySelector('iframe');
+                const src = iframe.src;
+                
+                favorites.push({
+                    id: videoId,
+                    title: title,
+                    src: src
+                });
+            } else {
+                // 즐겨찾기 제거
+                favorites.splice(index, 1);
+            }
+            
+            saveFavorites(favorites);
+            updateFavoriteStars();
+            renderFavorites();
+        }
+
+        // 별 아이콘 상태 업데이트
+        function updateFavoriteStars() {
+            const favorites = loadFavorites();
+            const favoriteIds = favorites.map(fav => fav.id);
+            
+            document.querySelectorAll('.favorite-star').forEach(star => {
+                const videoId = star.getAttribute('data-video-id');
+                if (favoriteIds.includes(videoId)) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // 즐겨찾기 섹션 렌더링
+        function renderFavorites() {
+            const favorites = loadFavorites();
+            const favoritesSection = document.getElementById('favorites-section');
+            const favoritesContainer = document.getElementById('favorites-container');
+            
+            if (favorites.length === 0) {
+                favoritesSection.style.display = 'none';
+                return;
+            }
+            
+            favoritesSection.style.display = 'block';
+            favoritesContainer.innerHTML = '';
+            
+            favorites.forEach(favorite => {
+                const videoElement = document.createElement('div');
+                videoElement.className = 'video-item';
+                videoElement.setAttribute('data-video-id', favorite.id);
+                videoElement.setAttribute('data-title', favorite.title);
+                
+                videoElement.innerHTML = `
+                    <div class="responsive-iframe">
+                        <iframe src="${favorite.src}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-title">
+                        ${favorite.title}
+                        <i class="fas fa-star favorite-star active" data-video-id="${favorite.id}"></i>
+                    </div>
+                `;
+                
+                favoritesContainer.appendChild(videoElement);
+            });
+        }
+
+        // 이벤트 리스너 등록
+        function initializeEventListeners() {
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('favorite-star')) {
+                    e.preventDefault();
+                    const videoId = e.target.getAttribute('data-video-id');
+                    toggleFavorite(videoId);
+                }
+            });
+        }
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            updateFavoriteStars();
+            renderFavorites();
+            initializeEventListeners();
+        });
+    </script>
 </body>
 </html>
