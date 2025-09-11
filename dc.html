@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>데이터클라우드학과 채플</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .page-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .chapel-card {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .chapel-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+        }
+        
+        .chapel-header {
+            display: flex;
+            align-items: center;
+            padding: 32px;
+            background: white;
+        }
+        
+        .chapel-icons {
+            margin-right: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .icon-main {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .icon-main:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+        }
+        
+        .icon-main img {
+            width: 72px;
+            height: 72px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .chapel-info {
+            flex-grow: 1;
+        }
+        
+        .chapel-title-line {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .chapel-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0;
+        }
+        
+        .chapel-date {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 500;
+            padding: 4px 12px;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+        
+        .chapel-content {
+            font-size: 15px;
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .chapel-additional-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .chapel-additional-links a {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            padding: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chapel-additional-links a:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+        }
+        
+        .chapel-additional-links img {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* 2학기 카드들을 위한 주황색 스타일 */
+        .chapel-card[data-search*="2학기"] .icon-main {
+            background: linear-gradient(135deg, #ff9800 0%, #ff6f00 100%);
+            box-shadow: 0 8px 24px rgba(255, 152, 0, 0.3);
+        }
+        
+        .chapel-card[data-search*="2학기"] .icon-main:hover {
+            box-shadow: 0 12px 32px rgba(255, 152, 0, 0.4);
+        }
+        
+        .chapel-card[data-search*="2학기"] .chapel-additional-links a {
+            background: linear-gradient(135deg, #ff9800 0%, #ff6f00 100%);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.2);
+        }
+        
+        .chapel-card[data-search*="2학기"] .chapel-additional-links a:hover {
+            box-shadow: 0 6px 16px rgba(255, 152, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">데이터클라우드학과 채플</h1>
+        </div>
+
+        <div id="chapel-cards">
+            <div class="chapel-card" data-search="3월 11일 1주차">
+                <div class="chapel-header">
+                    <div class="chapel-icons">
+                        <div class="icon-main">
+                            <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EQ17eN8XlCFOjFGrR4bMtgEBCh56cjJRelbejBBDR0fF8A?e=D5keZh" target="_blank">
+                                <img src="https://img.icons8.com/material-outlined/96/presentation.png" alt="PPT" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapel-info">
+                        <div class="chapel-title-line">
+                            <div class="chapel-title">1학기 1주차 채플</div>
+                            <div class="chapel-date">2025년 3월 11일</div>
+                        </div>
+                        <div class="chapel-content">
+                            채플 오리엔테이션 및 일정 안내<br>
+                            교수님/리더/임원 소개<br>
+                            공동체 임원 & BSM 임원 모집
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapel-card" data-search="3월 18일 2주차">
+                <div class="chapel-header">
+                    <div class="chapel-icons">
+                        <div class="icon-main">
+                            <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EQ-CMP1y_olCqMWtuXlhqaYBtGGOn_9gcQnst0CSjcAKww?e=jaJfcE" target="_blank">
+                                <img src="https://img.icons8.com/material-outlined/96/presentation.png" alt="PPT" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapel-info">
+                        <div class="chapel-title-line">
+                            <div class="chapel-title">1학기 2주차 채플</div>
+                            <div class="chapel-date">2025년 3월 18일</div>
+                        </div>
+                        <div class="chapel-content">
+                            소그룹 구성 및 진행<br>
+                            첫인상 롤링페이퍼 & 마니또 1차 뽑기
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapel-card" data-search="3월 25일 3주차">
+                <div class="chapel-header">
+                    <div class="chapel-icons">
+                        <div class="icon-main">
+                            <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EayTUIhXrqlEqlP8E40qTe4BPWZUZqHZF5pZ9UH9xP8r4A?e=yN7XgM" target="_blank">
+                                <img src="https://img.icons8.com/material-outlined/96/presentation.png" alt="PPT" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapel-info">
+                        <div class="chapel-title-line">
+                            <div class="chapel-title">1학기 3주차 채플</div>
+                            <div class="chapel-date">2025년 3월 25일</div>
+                        </div>
+                        <div class="chapel-content">
+                            마니또 2차 뽑기 진행<br>
+                            그림 이어그리기
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapel-card" data-search="4월 1일 4주차 마니또">
+                <div class="chapel-header">
+                    <div class="chapel-icons">
+                        <div class="icon-main">
+                            <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EUGf052eOUNHkofNiGvanSsBak-cNn_8B9sQYyEbmP2DYw?e=eZu3zX" target="_blank">
+                                <img src="https://img.icons8.com/material-outlined/96/presentation.png" alt="PPT" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapel-info">
+                        <div class="chapel-title-line">
+                            <div class="chapel-title">1학기 4주차 채플</div>
+                            <div class="chapel-date">2025년 4월 1일</div>
+                        </div>
+                        <div class="chapel-content">
+                            마니또 1차, 2차 결산 및 선물 증정<br>
+                        </div>
+                        <div class="chapel-additional-links">
+                            <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EanLESHWENBFok3nZ6EcK2wB179cOj7M7gPY1-9sN1i75w?e=wB0oi8" target="_blank">
+                                <img src="https://img.icons8.com/material-outlined/96/vote.png"/>
+                            </a>
+                            <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EcktLhiTE51OqoV7l9lFQpQBk10MIuY2NHCdRWnDD5YUTw?e=AVQO1V" target="_blank">
+                                <img src="https://img.icons8.com/material-outlined/96/vote.png"/>
+                            </a>
+                            <a href="https://1drv.ms/x/c/6f9e6c02e24cb4b7/EcMZBSMGz_FCgv3avG02XocBDql6tuyyEuX96s5auEQ7Jg?e=y5YiuI" target="_blank">
+                                <img src="https://img.icons8.com/material-outlined/96/spreadsheet.png"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapel-card" data-search="4월 8일 5주차">
+                <div class="chapel-header">
+                    <div class="chapel-icons">
+                        <div class="icon-main">
+                            <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EcX00R5KwPREj8y96fVbUZIBiwMkxJjywTMnw23DjE8zzA?e=2gN1Ru" target="_blank">
+                                <img src="https://img.icons8.com/material-outlined/96/presentation.png" alt="PPT" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapel-info">
+                        <div class="chapel-title-line">
+                            <div class="chapel-title">1학기 5주차 채플</div>
+                            <div class="chapel-date">2025년 4월 8일</div>
+                        </div>
+                        <div class="chapel-content">
+                            모두 함께 밖에서 벚꽃 단체사진 촬영<br>
+                            각 조별로 사진 공모전 진행
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapel-card" data-search="5월 20일 9주차">
+                <div class="chapel-header">
+                    <div class="chapel-icons">
+                        <div class="icon-main">
+                            <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EX6zO-f-9uJPuyKozrGOi5UBbDjWbXnVnPknHUjSFUobhw?e=rfEFXN" target="_blank">
+                                <img src="https://img.icons8.com/material-outlined/96/presentation.png" alt="PPT" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapel-info">
+                        <div class="chapel-title-line">
+                            <div class="chapel-title">1학기 9주차 채플</div>
+                            <div class="chapel-date">2025년 5월 20일</div>
+                        </div>
+                        <div class="chapel-content">
+                            조별 사진 공모전 결과<br>
+                            확대 축소 퀴즈, 숨은 인물 맞추기 게임
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapel-card" data-search="5월 27일 10주차">
+                <div class="chapel-header">
+                    <div class="chapel-icons">
+                        <div class="icon-main">
+                            <a href="https://leesanghoon05.github.io/school/secondweb.html" target="_blank">
+                                <img src="https://img.icons8.com/material-outlined/96/presentation.png" alt="Web" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapel-info">
+                        <div class="chapel-title-line">
+                            <div class="chapel-title">1학기 10주차 채플</div>
+                            <div class="chapel-date">2025년 5월 27일</div>
+                        </div>
+                        <div class="chapel-content">
+                            퀴즈 레크레이션<br>
+                            한 학기 채플을 마무리
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapel-card" data-search="9월 9일 2학기 1주차">
+                <div class="chapel-header">
+                    <div class="chapel-icons">
+                        <div class="icon-main">
+                            <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/EVYlu4PwDmNOhAO25_iwF-oBQQGB5tZr2qDLNSNulmaiYQ?e=FaWlDM" target="_blank">
+                                <img src="https://img.icons8.com/material-outlined/96/ff9800/presentation.png" alt="PPT" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapel-info">
+                        <div class="chapel-title-line">
+                            <div class="chapel-title">2학기 1주차 채플</div>
+                            <div class="chapel-date">2025년 9월 9일</div>
+                        </div>
+                        <div class="chapel-content">
+                            2학기 채플 시작
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapel-card" data-search="9월 16일 2학기 2주차">
+                <div class="chapel-header">
+                    <div class="chapel-icons">
+                        <div class="icon-main">
+                            <a href="https://1drv.ms/p/c/6f9e6c02e24cb4b7/ERtSmfAcT1tDnTzKoDgWKpoBwBVwu5TYTIz63bfcnz7CUg?e=OyHRtX" target="_blank">
+                                <img src="https://img.icons8.com/material-outlined/96/ff9800/presentation.png" alt="PPT" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chapel-info">
+                        <div class="chapel-title-line">
+                            <div class="chapel-title">2학기 2주차 채플</div>
+                            <div class="chapel-date">2025년 9월 16일</div>
+                        </div>
+                        <div class="chapel-content">
+                            2학기 2주차 채플
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
