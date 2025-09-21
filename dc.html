@@ -177,6 +177,118 @@
         .chapel-card[data-search*="2학기"] .chapel-additional-links a:hover {
             box-shadow: 0 6px 16px rgba(255, 152, 0, 0.3);
         }
+
+        /* 모바일 반응형 스타일 */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .page-header {
+                padding: 20px 15px;
+                margin-bottom: 20px;
+            }
+            
+            .page-title {
+                font-size: 24px;
+            }
+            
+            .chapel-card {
+                margin-bottom: 16px;
+            }
+            
+            .chapel-header {
+                flex-direction: column;
+                padding: 20px 15px;
+                gap: 20px;
+            }
+            
+            .chapel-icons {
+                margin-right: 0;
+                justify-content: center;
+            }
+            
+            .icon-main {
+                width: 80px;
+                height: 80px;
+                padding: 16px;
+            }
+            
+            .icon-main img {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .chapel-info {
+                text-align: center;
+            }
+            
+            .chapel-title-line {
+                flex-direction: column;
+                gap: 8px;
+                align-items: center;
+            }
+            
+            .chapel-title {
+                font-size: 18px;
+                text-align: center;
+            }
+            
+            .chapel-date {
+                font-size: 13px;
+            }
+            
+            .chapel-content {
+                font-size: 14px;
+                line-height: 1.6;
+                margin-bottom: 16px;
+            }
+            
+            .chapel-additional-links {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            
+            .chapel-additional-links a {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .chapel-additional-links img {
+                width: 20px;
+                height: 20px;
+            }
+        }
+        
+        /* 더 작은 화면 (모바일 세로) */
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 20px;
+            }
+            
+            .chapel-header {
+                padding: 15px 10px;
+            }
+            
+            .chapel-title {
+                font-size: 16px;
+            }
+            
+            .chapel-content {
+                font-size: 13px;
+            }
+            
+            .icon-main {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .icon-main img {
+                width: 40px;
+                height: 40px;
+            }
+        }
     </style>
 </head>
 <body>
